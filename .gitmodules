@@ -1,0 +1,9 @@
+[submodule "source/rozdzial_27"]
+	path = source/rozdzial_27
+	url = https://github.com/oski486/BazyDanych-Subject.git
+[submodule "source/rozdział_27"]
+	path = source/rozdział_27
+	url = https://github.com/oski486/BazyDanych-Subject.git
+[submodule "source/rozdział_2/rozdział_27"]
+	path = source/rozdział_2/rozdział_27
+	url = https://github.com/oski486/BazyDanych-Subject.git
