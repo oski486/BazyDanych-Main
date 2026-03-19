@@ -1,2 +1,2 @@
-# Bazy-Danych---G-wne
+# Bazy-Danych-Glowne
 PWR
