@@ -140,8 +140,8 @@ W wyniku normalizacji wyodrębniono 8 tabel.
 * **Produkty**: ``ID_Produktu`` (PK), ``ID_Kategorii`` (FK), ``ID_Producenta`` (FK), ``Nazwa``, ``Opis``, ``Cena_aktualna``, ``Stan_magazynowy``, ``Gwarancja_miesiace``
 * **Zamowienia**: ``ID_Zamowienia`` (PK), ``ID_Klienta`` (FK), ``Data_zamowienia``, ``Status_zamowienia``, ``Sposob_dostawy``
 * **Platnosci**: ``ID_Platnosci`` (PK), ``ID_Zamowienia`` (FK), ``Metoda_platnosci``, ``Status_platnosci``
-* **Pozycje_Zamowienia**: ``ID_Zamowienia`` (PK, FK), ``ID_Produktu`` (PK, FK), ``Ilosc``, ``Cena_historyczna``
-* **Opinie**: ``ID_Opinii`` (PK), ``ID_Zamowienia`` (FK), ``ID_Produktu`` (FK), ``Ocena``, ``Komentarz``
+* **Pozycje_Zamowienia**: ``ID_Pozycji`` (PK), ``ID_Zamowienia`` (FK), ``ID_Produktu`` (FK), ``Ilosc``, ``Cena_historyczna``
+* **Opinie**: ``ID_Opinii`` (PK), ``ID_Pozycji`` (FK), ``Ocena``, ``Komentarz``
 
 4.3. Diagram ERD (Model Logiczny)
 ---------------------------------
@@ -170,8 +170,8 @@ Z uwagi na bardzo okrojony zestaw typów (INTEGER, REAL, TEXT, BLOB, NULL), daty
 * **Produkty**: ``ID_Produktu`` : INTEGER PRIMARY KEY, ``ID_Kategorii`` : INTEGER, ``ID_Producenta`` : INTEGER, ``Nazwa`` : TEXT, ``Opis`` : TEXT, ``Cena_aktualna`` : REAL, ``Stan_magazynowy`` : INTEGER, ``Gwarancja_miesiace`` : INTEGER
 * **Zamowienia**: ``ID_Zamowienia`` : INTEGER PRIMARY KEY, ``ID_Klienta`` : INTEGER, ``Data_zamowienia`` : TEXT, ``Status_zamowienia`` : TEXT, ``Sposob_dostawy`` : TEXT
 * **Platnosci**: ``ID_Platnosci`` : INTEGER PRIMARY KEY, ``ID_Zamowienia`` : INTEGER, ``Metoda_platnosci`` : TEXT, ``Status_platnosci`` : TEXT
-* **Pozycje_Zamowienia**: ``ID_Zamowienia`` : INTEGER, ``ID_Produktu`` : INTEGER, ``Ilosc`` : INTEGER, ``Cena_historyczna`` : REAL (Klucz główny złożony z ID_Zamowienia, ID_Produktu)
-* **Opinie**: ``ID_Opinii`` : INTEGER PRIMARY KEY, ``ID_Zamowienia`` : INTEGER, ``ID_Produktu`` : INTEGER, ``Ocena`` : INTEGER, ``Komentarz`` : TEXT
+* **Pozycje_Zamowienia**: ``ID_Pozycji`` : INTEGER PRIMARY KEY, ``ID_Zamowienia`` : INTEGER, ``ID_Produktu`` : INTEGER, ``Ilosc`` : INTEGER, ``Cena_historyczna`` : REAL
+* **Opinie**: ``ID_Opinii`` : INTEGER PRIMARY KEY, ``ID_Pozycji`` : INTEGER, ``Ocena`` : INTEGER, ``Komentarz`` : TEXT
 
 .. figure:: schemat_fizyczny_sqlite.png
    :align: center
@@ -192,8 +192,8 @@ PostgreSQL umożliwia zastosowanie precyzyjnych i natywnych typów ułatwiający
 * **Produkty**: ``ID_Produktu`` : SERIAL PRIMARY KEY, ``ID_Kategorii`` : INTEGER REFERENCES Kategorie, ``ID_Producenta`` : INTEGER REFERENCES Producenci, ``Nazwa`` : VARCHAR(200), ``Opis`` : TEXT, ``Cena_aktualna`` : NUMERIC(10,2), ``Stan_magazynowy`` : INTEGER, ``Gwarancja_miesiace`` : SMALLINT
 * **Zamowienia**: ``ID_Zamowienia`` : SERIAL PRIMARY KEY, ``ID_Klienta`` : INTEGER REFERENCES Klienci, ``Data_zamowienia`` : TIMESTAMP, ``Status_zamowienia`` : VARCHAR(50), ``Sposob_dostawy`` : VARCHAR(50)
 * **Platnosci**: ``ID_Platnosci`` : SERIAL PRIMARY KEY, ``ID_Zamowienia`` : INTEGER REFERENCES Zamowienia, ``Metoda_platnosci`` : VARCHAR(50), ``Status_platnosci`` : VARCHAR(50)
-* **Pozycje_Zamowienia**: ``ID_Zamowienia`` : INTEGER REFERENCES Zamowienia, ``ID_Produktu`` : INTEGER REFERENCES Produkty, ``Ilosc`` : INTEGER, ``Cena_historyczna`` : NUMERIC(10,2) (PRIMARY KEY: ID_Zamowienia, ID_Produktu)
-* **Opinie**: ``ID_Opinii`` : SERIAL PRIMARY KEY, ``ID_Zamowienia`` : INTEGER, ``ID_Produktu`` : INTEGER, ``Ocena`` : SMALLINT CHECK(Ocena BETWEEN 1 AND 5), ``Komentarz`` : TEXT, FOREIGN KEY (ID_Zamowienia, ID_Produktu) REFERENCES Pozycje_Zamowienia(ID_Zamowienia, ID_Produktu)
+* **Pozycje_Zamowienia**: ``ID_Pozycji`` : SERIAL PRIMARY KEY, ``ID_Zamowienia`` : INTEGER REFERENCES Zamowienia, ``ID_Produktu`` : INTEGER REFERENCES Produkty, ``Ilosc`` : INTEGER, ``Cena_historyczna`` : NUMERIC(10,2)
+* **Opinie**: ``ID_Opinii`` : SERIAL PRIMARY KEY, ``ID_Pozycji`` : INTEGER REFERENCES Pozycje_Zamowienia(ID_Pozycji), ``Ocena`` : SMALLINT CHECK(Ocena BETWEEN 1 AND 5), ``Komentarz`` : TEXT
 
 .. figure:: schemat_fizyczny_postgres.png
    :align: center
