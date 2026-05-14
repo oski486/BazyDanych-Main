@@ -1,0 +1,19 @@
+Komentarz
+
+Uwaga: Zadanie jest częścią sprawozdania laboratoryjnego.
+
+Wcześniejszy etap zadania laboratoryjnego pozwolił ustalić zestaw danych oraz ich typy do przechowywania w bazie danych. Wprowadzane dane są też w znacznej mierze nadmiarowe.
+
+Dane te należy teraz podzielić na większą liczbę tabel. Podczas tego procesu należy m.in. uwzględnić możliwe przyszłe zapytania do bazy danych aby uniknąć np. pułapki połączeń (takiej jak tzw. wiatrak).
+
+Strukturę danych w bazie przedstawia się za pomocą modelu logicznego, który jest niezależny jeszcze od implementacji.
+
+Dla weryfikacji poprawności modelu zastosować należy proces normalizacji. Nie chodzi przy tym o to by za wszelką cenę osiągnąć 5 postać normalną lecz uzyskać pewien kompromis pomiędzy nadmiarowością danych, podatnością na anomalie oraz wydajnością.
+
+W zadaniu należy:
+
+    przedstawić model logiczny bazy danych za pomocą schematu ERD,
+
+    przeprowadzić proces normalizacji oraz określić jej stopień dla schematu będącego później podstawą dla modelu fizycznego.
+
+ERD (Entity Relationship Diagram) można przedstawić np. w notacji Barkera.
