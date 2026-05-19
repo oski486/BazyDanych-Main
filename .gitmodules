@@ -28,3 +28,6 @@
 [submodule "source/rozdział_2/rozdział_28"]
 	path = source/rozdział_2/rozdział_28
 	url = https://github.com/Koko9077/Kopie-zapasowe-i-odzyskiwanie-danych.git
+[submodule "source/rozdział_3/BD_PlanBazyDanych_zad1"]
+	path = source/rozdział_3/BD_PlanBazyDanych_zad1
+	url = git@github.com:oski486/BD_PlanBazyDanych_zad1.git
