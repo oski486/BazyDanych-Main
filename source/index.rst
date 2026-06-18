@@ -19,3 +19,5 @@ documentation for details.
    ./rozdział_2/index
    ./rozdział_3/index
    ./rozdział_4/index
+   ./rozdział_5/index
+
