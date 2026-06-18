@@ -31,3 +31,9 @@
 [submodule "source/rozdział_3/BD_PlanBazyDanych_zad1"]
 	path = source/rozdział_3/BD_PlanBazyDanych_zad1
 	url = git@github.com:oski486/BD_PlanBazyDanych_zad1.git
+[submodule "source/rozdział_4/BD_WprowadzanieBD"]
+	path = source/rozdział_4/BD_WprowadzanieBD
+	url = git@github.com:oski486/BD_WprowadzanieBD.git
+[submodule "source/rozdział_5/BD_Zapytania"]
+	path = source/rozdział_5/BD_Zapytania
+	url = git@github.com:oski486/BD_Zapytania.git
