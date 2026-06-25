@@ -6,6 +6,11 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import os
+import sys
+# Wskazujemy Sphinxowi, gdzie leży plik db_queries.py
+sys.path.insert(0, os.path.abspath('./rozdział_5/BD_Zapytania'))
+
 project = 'Sprawozdanie z laboratorium'
 copyright = '2026, Mąka Oskar'
 author = 'Mąka Oskar'
@@ -13,7 +18,9 @@ author = 'Mąka Oskar'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    'sphinx.ext.autodoc',
+]
 
 templates_path = ['_templates']
 exclude_patterns = []

@@ -74,11 +74,133 @@
 <section id="dokumentacja-modulu-zapytan-auto-sphinx">
 <h2>Dokumentacja modułu zapytań (Auto-Sphinx)<a class="headerlink" href="#dokumentacja-modulu-zapytan-auto-sphinx" title="Link to this heading">¶</a></h2>
 <p>Poniższa dokumentacja funkcji operujących na bazie danych została wygenerowana automatycznie z użyciem narzędzia Sphinx, na podstawie docstringów umieszczonych bezpośrednio w kodzie źródłowym modułu <code class="docutils literal notranslate"><span class="pre">db_queries.py</span></code>.</p>
+<p id="module-db_queries">Moduł realizujący zaawansowane zapytania do bazy danych sklepu z elektroniką.
+Obsługuje silniki SQLite oraz PostgreSQL.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_best_reviewed_products_pg">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_best_reviewed_products_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_best_reviewed_products_pg" title="Link to this definition">¶</a></dt>
+<dd><p>Zwraca 5 najlepiej ocenianych produktów z minimum 3 opiniami.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_categories_without_stock_sqlite">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_categories_without_stock_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_categories_without_stock_sqlite" title="Link to this definition">¶</a></dt>
+<dd><p>Wyszukuje kategorie, w których nie ma obecnie żadnych dostępnych produktów.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_clients_multi_delivery_pg">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_clients_multi_delivery_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_clients_multi_delivery_pg" title="Link to this definition">¶</a></dt>
+<dd><p>Zwraca klientów korzystających z obu metod dostawy (INTERSECT).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_clients_without_opinions_sqlite">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_clients_without_opinions_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_clients_without_opinions_sqlite" title="Link to this definition">¶</a></dt>
+<dd><p>Znajduje klientów, którzy złożyli zamówienie, ale nigdy nie wystawili opinii (EXCEPT).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_monthly_sales_summary_pg">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_monthly_sales_summary_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_monthly_sales_summary_pg" title="Link to this definition">¶</a></dt>
+<dd><p>Oblicza miesięczne podsumowanie sprzedaży w sklepie.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_order_full_details_sqlite">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_order_full_details_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_order_full_details_sqlite" title="Link to this definition">¶</a></dt>
+<dd><p>Pobiera pełne informacje o konkretnym zamówieniu.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_popular_payment_for_category_pg">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_popular_payment_for_category_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_popular_payment_for_category_pg" title="Link to this definition">¶</a></dt>
+<dd><p>Wskazuje najczęściej wybieraną metodę płatności dla danej kategorii.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_product_revenue_report_sqlite">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_product_revenue_report_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_product_revenue_report_sqlite" title="Link to this definition">¶</a></dt>
+<dd><p>Generuje raport przychodów dla każdego produktu.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_products_needing_attention_pg">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_products_needing_attention_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_products_needing_attention_pg" title="Link to this definition">¶</a></dt>
+<dd><p>Identyfikuje produkty wymagające interwencji: niskie stany UNION niskie oceny.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_queries.get_top_spending_clients_sqlite">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_top_spending_clients_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_queries.get_top_spending_clients_sqlite" title="Link to this definition">¶</a></dt>
+<dd><p>Zwraca klientów, których łączna kwota zamówień przekracza średnią wartość wszystkich zamówień w sklepie.</p>
+</dd></dl>
+
 <section id="funkcje-dedykowane-dla-sqlite">
 <h3>Funkcje dedykowane dla SQLite<a class="headerlink" href="#funkcje-dedykowane-dla-sqlite" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_top_spending_clients_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd><p>Zwraca klientów, których łączna kwota zamówień przekracza średnią wartość wszystkich zamówień w sklepie.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_clients_without_opinions_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd><p>Znajduje klientów, którzy złożyli zamówienie, ale nigdy nie wystawili opinii (EXCEPT).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_product_revenue_report_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
+<dd><p>Generuje raport przychodów dla każdego produktu.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_categories_without_stock_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
+<dd><p>Wyszukuje kategorie, w których nie ma obecnie żadnych dostępnych produktów.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_order_full_details_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
+<dd><p>Pobiera pełne informacje o konkretnym zamówieniu.</p>
+</dd></dl>
+
 </section>
 <section id="funkcje-dedykowane-dla-postgresql">
 <h3>Funkcje dedykowane dla PostgreSQL<a class="headerlink" href="#funkcje-dedykowane-dla-postgresql" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_monthly_sales_summary_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id5" title="Link to this definition">¶</a></dt>
+<dd><p>Oblicza miesięczne podsumowanie sprzedaży w sklepie.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_products_needing_attention_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
+<dd><p>Identyfikuje produkty wymagające interwencji: niskie stany UNION niskie oceny.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_best_reviewed_products_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id7" title="Link to this definition">¶</a></dt>
+<dd><p>Zwraca 5 najlepiej ocenianych produktów z minimum 3 opiniami.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_popular_payment_for_category_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
+<dd><p>Wskazuje najczęściej wybieraną metodę płatności dla danej kategorii.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-prename descclassname"><span class="pre">db_queries.</span></span><span class="sig-name descname"><span class="pre">get_clients_multi_delivery_pg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id9" title="Link to this definition">¶</a></dt>
+<dd><p>Zwraca klientów korzystających z obu metod dostawy (INTERSECT).</p>
+</dd></dl>
+
 </section>
 </section>
 </section>
@@ -102,7 +224,7 @@
 <h3>Nawigacja</h3>
 <p class="caption" role="heading"><span class="caption-text">Spis treści:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_1/index.html">Wprowadzenie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_1/index.html">Rozdział 1: Wprowadzenie</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_2/index.html">Przegląd literaturowy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_3/BD_PlanBazyDanych_zad1/index.html">Sprawozdanie: Projektowanie bazy danych</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_4/BD_WprowadzanieBD/index.html">Rozdział 4: Implementacja fizyczna i zasilanie bazy danych</a></li>

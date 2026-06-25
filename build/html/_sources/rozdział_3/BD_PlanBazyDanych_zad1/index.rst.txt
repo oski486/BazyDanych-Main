@@ -40,7 +40,7 @@ Głównym procesem w systemie jest realizacja transakcji zakupu sprzętu elektro
 
 Aby zweryfikować kompletność przetwarzanych informacji, przygotowano "płaską" (nieznormalizowaną) reprezentację danych dla transakcji zakupu.
 
-.. code-block:: csv
+.. code-block:: text
 
     Imie,Nazwisko,Email,Telefon,Miasto,Ulica,Kod_Pocztowy,Nazwa_Produktu,Producent,Kategoria,Cena_Aktualna,Gwarancja_Miesiace,Data_Zamowienia,Status_Zamowienia,Sposob_Dostawy,Metoda_Platnosci,Status_Platnosci,Ilosc_Zakupiona,Cena_Historyczna,Ocena_Produktu,Komentarz
     Jan,Kowalski,250123@student.pwr.edu.pl,500600700,Wrocław,Wybrzeże Wyspiańskiego 27,50-370,Laptop ThinkPad T14,Lenovo,Komputery,6500.00,36,2023-11-20,Dostarczone,Paczkomat,BLIK,Zakonczona,1,6500.00,5,"Solidny sprzęt na studia."
