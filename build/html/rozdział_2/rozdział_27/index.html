@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="pl" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Bezpieczeństwo Baz Danych &#8212; Sprawozdanie z laboratorium  - dokumentacja</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=cb25574f" />
+    <script src="../../_static/documentation_options.js?v=9893e7ba"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=a186e9ce"></script>
+    <link rel="index" title="Indeks" href="../../genindex.html" />
+    <link rel="search" title="Szukaj" href="../../search.html" />
+    <link rel="next" title="1. Model bezpieczeństwa CIA i ochrona infrastruktury" href="rozdzial_1.html" />
+    <link rel="prev" title="Partycjonowanie danych" href="../rozdzia%C5%82_26/index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="bezpieczenstwo-baz-danych">
+<h1>Bezpieczeństwo Baz Danych<a class="headerlink" href="#bezpieczenstwo-baz-danych" title="Link to this heading">¶</a></h1>
+<p>Dział 7 przeglądu literaturowego poświęcony architekturze bezpieczeństwa, mechanizmom ochrony oraz analizie podatności w nowoczesnych systemach zarządzania bazami danych.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Autorzy<span class="colon">:</span></dt>
+<dd class="field-odd"><ol class="arabic simple">
+<li><p>Oskar Mąka</p></li>
+<li><p>Daniel Szokało</p></li>
+<li><p>Dawid Szokało</p></li>
+</ol>
+</dd>
+<dt class="field-even">Kierunek<span class="colon">:</span></dt>
+<dd class="field-even"><p>Informatyka Techniczna, Politechnika Wrocławska</p>
+</dd>
+<dt class="field-odd">Przedmiot<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Bazy Danych / Projekt Laboratoryjny</p>
+</dd>
+</dl>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Część 1: Fundamenty i Zagrożenia Zewnętrzne (Oskar Mąka)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rozdzial_1.html">1. Model bezpieczeństwa CIA i ochrona infrastruktury</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_1.html#triada-cia-w-srodowisku-bazodanowym">Triada CIA w środowisku bazodanowym</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_1.html#izolacja-sieciowa-i-architektura-chmurowa-vpc">Izolacja sieciowa i architektura chmurowa (VPC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_1.html#konteneryzacja-a-bezpieczenstwo-bazy">Konteneryzacja a bezpieczeństwo bazy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rozdzial_2.html">2. Ataki na bazy danych i luki w zabezpieczeniach</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_2.html#wstrzykiwanie-kodu-sql-sql-injection">Wstrzykiwanie kodu SQL (SQL Injection)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_2.html#ataki-nosql-injection">Ataki NoSQL Injection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_2.html#przepelnienie-bufora-buffer-overflow-w-dbms">Przepełnienie bufora (Buffer Overflow) w DBMS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_2.html#odmowa-uslugi-dos-na-poziomie-bazy-danych">Odmowa Usługi (DoS) na poziomie bazy danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_2.html#automatyzacja-atakow-narzedzia-audytowe">Automatyzacja ataków: Narzędzia audytowe</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Część 2: Mechanizmy Kontroli i Ochrony Danych (Daniel Szokało)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rozdzial_3.html">3. Zarządzanie tożsamością, uwierzytelnianie i autoryzacja</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_3.html#uwierzytelnianie-w-bazach-danych">Uwierzytelnianie w bazach danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_3.html#autoryzacja-i-modele-kontroli-dostepu">Autoryzacja i modele kontroli dostępu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_3.html#bezpieczenstwo-na-poziomie-wierszy-row-level-security">Bezpieczeństwo na poziomie wierszy (Row-Level Security)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_3.html#zarzadzanie-poswiadczeniami-aplikacji-secrets-management">Zarządzanie poświadczeniami aplikacji (Secrets Management)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rozdzial_4.html">4. Kryptografia w bazach danych</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_4.html#szyfrowanie-danych-w-spoczynku-data-at-rest">Szyfrowanie danych w spoczynku (Data at Rest)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_4.html#szyfrowanie-danych-w-tranzycie-data-in-transit">Szyfrowanie danych w tranzycie (Data in Transit)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_4.html#szyfrowanie-na-poziomie-klienta-client-side-encryption">Szyfrowanie na poziomie klienta (Client-Side Encryption)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_4.html#dynamiczne-maskowanie-danych-i-funkcje-skrotu">Dynamiczne maskowanie danych i funkcje skrótu</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Część 3: Monitoring i Ciągłość Działania (Dawid Szokało)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rozdzial_5.html">5. Audyt, logowanie i wykrywanie anomalii</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_5.html#znaczenie-audytu-i-rodzaje-logow-bazodanowych">Znaczenie audytu i rodzaje logów bazodanowych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_5.html#centralizacja-logow-i-systemy-siem">Centralizacja logów i systemy SIEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_5.html#database-activity-monitoring-dam-i-wykrywanie-anomalii">Database Activity Monitoring (DAM) i wykrywanie anomalii</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rozdzial_6.html">6. Bezpieczeństwo kopii zapasowych i Disaster Recovery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_6.html#zasada-3-2-1-i-niezmiennosc-kopii-immutable-backups">Zasada 3-2-1 i niezmienność kopii (Immutable Backups)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_6.html#szyfrowanie-archiwow-i-zarzadzanie-kluczami">Szyfrowanie archiwów i zarządzanie kluczami</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rozdzial_6.html#disaster-recovery-dr-i-wskazniki-rto-rpo">Disaster Recovery (DR) i wskaźniki RTO/RPO</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sprawozdanie z laboratorium</a></h1>
+
+
+
+
+
+
+
+
+<h3>Nawigacja</h3>
+<p class="caption" role="heading"><span class="caption-text">Spis treści:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_1/index.html">Wprowadzenie</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Przegląd literaturowy</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_21/index.html">Sprzęt dla bazy danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_22/index.html">Konfiguracja bazy danych PostgreSQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_23/index.html">Kontrola i konserwacja</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_24/index.html">Monitorowanie i diagnostyka</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_25/index.html">Wydajność, skalowanie i replikacja danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_26/index.html">Partycjonowanie danych</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Bezpieczeństwo Baz Danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_28/index.html">Kopie zapasowe i odzyskiwanie danych</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_3/BD_PlanBazyDanych_zad1/index.html">Sprawozdanie: Projektowanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_4/BD_WprowadzanieBD/index.html">Rozdział 4: Implementacja fizyczna i zasilanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_5/BD_Zapytania/index.html">Rozdział 5: Zapytania do bazy danych</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Przegląd literaturowy</a><ul>
+      <li>Previous: <a href="../rozdzia%C5%82_26/index.html" title="poprzedni rozdział">Partycjonowanie danych</a></li>
+      <li>Next: <a href="rozdzial_1.html" title="następny rozdział">1. Model bezpieczeństwa CIA i ochrona infrastruktury</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Szybkie wyszukiwanie</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Szukaj" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, Mąka Oskar.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/rozdział_2/rozdział_27/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

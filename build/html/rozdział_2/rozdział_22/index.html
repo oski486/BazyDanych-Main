@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+
+<html lang="pl" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Konfiguracja bazy danych PostgreSQL &#8212; Sprawozdanie z laboratorium  - dokumentacja</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=cb25574f" />
+    <script src="../../_static/documentation_options.js?v=9893e7ba"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=a186e9ce"></script>
+    <link rel="index" title="Indeks" href="../../genindex.html" />
+    <link rel="search" title="Szukaj" href="../../search.html" />
+    <link rel="next" title="Kontrola i konserwacja" href="../rozdzia%C5%82_23/index.html" />
+    <link rel="prev" title="Sprzęt dla bazy danych" href="../rozdzia%C5%82_21/index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="konfiguracja-bazy-danych-postgresql">
+<h1>Konfiguracja bazy danych PostgreSQL<a class="headerlink" href="#konfiguracja-bazy-danych-postgresql" title="Link to this heading">¶</a></h1>
+<section id="wstep">
+<h2>Wstęp<a class="headerlink" href="#wstep" title="Link to this heading">¶</a></h2>
+<p>Rozdział opisuje konfigurację połączenia z bazą danych <strong>PostgreSQL</strong> – dojrzałym, open-source’owym systemem zarządzania relacyjnymi bazami danych (RDBMS), który wyróżnia się pełną zgodnością ze standardem SQL oraz silnym naciskiem na rozszerzalność i niezawodność.</p>
+<p><strong>Wymagania:</strong></p>
+<ul class="simple">
+<li><p>dostęp do instancji PostgreSQL,</p></li>
+<li><p>zmienne środowiskowe,</p></li>
+<li><p>narzędzia projektowe (np. <code class="docutils literal notranslate"><span class="pre">psql</span></code>, <code class="docutils literal notranslate"><span class="pre">pg_isready</span></code>).</p></li>
+</ul>
+</section>
+<section id="podstawowe-parametry">
+<h2>Podstawowe parametry<a class="headerlink" href="#podstawowe-parametry" title="Link to this heading">¶</a></h2>
+<p>Każde połączenie z PostgreSQL wymaga:</p>
+<ul class="simple">
+<li><p>hosta i portu (domyślnie <code class="docutils literal notranslate"><span class="pre">localhost</span></code> i <code class="docutils literal notranslate"><span class="pre">5432</span></code>),</p></li>
+<li><p>nazwy bazy danych,</p></li>
+<li><p>użytkownika i hasła.</p></li>
+</ul>
+<p>Dane wrażliwe (np. hasła) przechowuj w <strong>zmiennych środowiskowych</strong> – to oddziela konfigurację od kodu.
+Pamiętaj: zmienne środowiskowe nie są mechanizmem bezpieczeństwa; w produkcji uzupełnij je o dedykowane
+zarządzanie sekretami (np. HashiCorp Vault, AWS Secrets Manager).</p>
+</section>
+<section id="lokalizacja-i-struktura-katalogow-postgresql">
+<h2>Lokalizacja i struktura katalogów PostgreSQL<a class="headerlink" href="#lokalizacja-i-struktura-katalogow-postgresql" title="Link to this heading">¶</a></h2>
+<p>Pliki konfiguracyjne PostgreSQL znajdują się w katalogu danych (<code class="docutils literal notranslate"><span class="pre">PGDATA</span></code>).</p>
+<p><strong>Główne pliki konfiguracyjne:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">postgresql.conf</span></code> – podstawowa konfiguracja serwera (port, pamięć, logi)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pg_hba.conf</span></code> – kontrola dostępu (kto i skąd może się łączyć)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pg_ident.conf</span></code> – mapowanie użytkowników systemowych na role PostgreSQL</p></li>
+</ul>
+<p><strong>Domyślne lokalizacje:</strong></p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text">Domyślne lokalizacje</span><a class="headerlink" href="#id6" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>System</p></th>
+<th class="head"><p>Katalog danych</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Linux (RPM/DEB)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/var/lib/pgsql/data/</span></code> lub <code class="docutils literal notranslate"><span class="pre">/var/lib/postgresql/*/main/</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Linux (kompilacja źródłowa)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/usr/local/pgsql/data/</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Windows</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\PostgreSQL\&lt;version&gt;\data\</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Docker</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/var/lib/postgresql/data/</span></code> (w kontenerze)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Zmiana katalogu danych:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inicjalizacja nowego katalogu</span>
+initdb<span class="w"> </span>-D<span class="w"> </span>/ścieżka/do/katalogu
+
+<span class="c1"># Uruchomienie z niestandardowym PGDATA</span>
+pg_ctl<span class="w"> </span>-D<span class="w"> </span>/ścieżka/do/katalogu<span class="w"> </span>start
+</pre></div>
+</div>
+<p><strong>Struktura katalogu danych:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$PGDATA/
+├── postgresql.conf   # główny plik konfiguracyjny
+├── pg_hba.conf       # polityka dostępu
+├── pg_ident.conf     # mapowanie tożsamości
+├── base/             # rzeczywiste bazy danych
+├── global/           # tabele systemowe
+├── log/              # logi serwera
+└── pg_wal/           # Write-Ahead Log (WAL)
+</pre></div>
+</div>
+<p><strong>Sprawdzenie aktualnej lokalizacji:</strong></p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">data_directory</span><span class="p">;</span>
+<span class="k">SHOW</span><span class="w"> </span><span class="n">config_file</span><span class="p">;</span>
+<span class="k">SHOW</span><span class="w"> </span><span class="n">hba_file</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="srodowiska-i-profile">
+<h2>Środowiska i profile<a class="headerlink" href="#srodowiska-i-profile" title="Link to this heading">¶</a></h2>
+<p>Przełączanie środowisk PostgreSQL (dev/test/prod) realizuj przez:</p>
+<ul class="simple">
+<li><p>zmienne środowiskowe (np. <code class="docutils literal notranslate"><span class="pre">PGHOST</span></code>, <code class="docutils literal notranslate"><span class="pre">PGPORT</span></code>, <code class="docutils literal notranslate"><span class="pre">PGDATABASE</span></code>, <code class="docutils literal notranslate"><span class="pre">PGUSER</span></code>, <code class="docutils literal notranslate"><span class="pre">PGPASSWORD</span></code>),</p></li>
+<li><p>profile konfiguracyjne,</p></li>
+<li><p>osobne pliki <code class="docutils literal notranslate"><span class="pre">.env</span></code> dla każdego środowiska.</p></li>
+</ul>
+</section>
+<section id="automatyzacja">
+<h2>Automatyzacja<a class="headerlink" href="#automatyzacja" title="Link to this heading">¶</a></h2>
+<p>Zalecenia dla PostgreSQL:</p>
+<ul class="simple">
+<li><p>walidacja konfiguracji przy starcie za pomocą <code class="docutils literal notranslate"><span class="pre">pg_isready</span></code>,</p></li>
+<li><p>skrypty sprawdzające kompletność zmiennych środowiskowych,</p></li>
+<li><p>integracja z CI/CD (np. GitHub Actions, GitLab CI).</p></li>
+</ul>
+<p>Dokumentację generuj automatycznie (Sphinx).</p>
+</section>
+<section id="przyklady">
+<h2>Przykłady<a class="headerlink" href="#przyklady" title="Link to this heading">¶</a></h2>
+<p><strong>PostgreSQL – zmienne środowiskowe (.env)</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PGHOST=localhost
+PGPORT=5432
+PGDATABASE=aplikacja
+PGUSER=app_user
+PGPASSWORD=${DB_PASSWORD}
+</pre></div>
+</div>
+<p><strong>PostgreSQL – URL połączenia</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>DATABASE_URL=postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}
+</pre></div>
+</div>
+<p><strong>PostgreSQL – sprawdzenie połączenia</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pg_isready -h ${PGHOST} -p ${PGPORT} -U ${PGUSER} -d ${PGDATABASE}
+</pre></div>
+</div>
+</section>
+<section id="najlepsze-praktyki">
+<h2>Najlepsze praktyki<a class="headerlink" href="#najlepsze-praktyki" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Nie przechowuj sekretów w repozytorium.</p></li>
+<li><p>Stosuj <code class="docutils literal notranslate"><span class="pre">.env.example</span></code> zamiast rzeczywistych danych.</p></li>
+<li><p>Używaj standardowych zmiennych środowiskowych PostgreSQL (<code class="docutils literal notranslate"><span class="pre">PG*</span></code>).</p></li>
+<li><p>Waliduj konfigurację przed uruchomieniem (<code class="docutils literal notranslate"><span class="pre">pg_isready</span></code>).</p></li>
+<li><p>W środowiskach produkcyjnych używaj połączeń SSL/TLS (<code class="docutils literal notranslate"><span class="pre">sslmode=require</span></code>).</p></li>
+</ol>
+</section>
+<section id="podsumowanie">
+<h2>Podsumowanie<a class="headerlink" href="#podsumowanie" title="Link to this heading">¶</a></h2>
+<p>Poprawna konfiguracja połączenia z PostgreSQL zwiększa bezpieczeństwo i przenośność aplikacji między środowiskami. Standardowe zmienne środowiskowe oraz narzędzia takie jak <code class="docutils literal notranslate"><span class="pre">pg_isready</span></code> ułatwiają automatyzację i walidację.</p>
+</section>
+<section id="szczegolowe-omowienie-plikow-konfiguracyjnych">
+<h2>Szczegółowe omówienie plików konfiguracyjnych<a class="headerlink" href="#szczegolowe-omowienie-plikow-konfiguracyjnych" title="Link to this heading">¶</a></h2>
+<p>Po omówieniu podstawowych wymagań środowiskowych można przejść do szczegółowej konfiguracji PostgreSQL.</p>
+<p>W kolejnych sekcjach przedstawiono najważniejsze parametry konfiguracyjne dostępne w plikach:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">postgresql.conf</span></code> – konfiguracja działania serwera,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pg_hba.conf</span></code> – kontrola dostępu do bazy danych,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pg_ident.conf</span></code> – mapowanie użytkowników systemowych na role PostgreSQL.</p></li>
+</ul>
+</section>
+<section id="postgresql-conf">
+<h2>postgresql.conf<a class="headerlink" href="#postgresql-conf" title="Link to this heading">¶</a></h2>
+<p>Plik <code class="docutils literal notranslate"><span class="pre">postgresql.conf</span></code> jest głównym plikiem konfiguracyjnym klastra PostgreSQL.
+Zawiera ustawienia wpływające na działanie serwera, wydajność, bezpieczeństwo, logowanie oraz replikację.</p>
+<p>Lokalizację aktywnego pliku można sprawdzić poleceniem:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">config_file</span><span class="p">;</span>
+</pre></div>
+</div>
+<section id="najwazniejsze-parametry">
+<h3>Najważniejsze parametry<a class="headerlink" href="#najwazniejsze-parametry" title="Link to this heading">¶</a></h3>
+<section id="polaczenia-sieciowe">
+<h4>Połączenia sieciowe<a class="headerlink" href="#polaczenia-sieciowe" title="Link to this heading">¶</a></h4>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">listen_addresses</span></code></dt><dd><p>Określa adresy IP, na których PostgreSQL nasłuchuje połączeń.</p>
+<p>Najczęstsze wartości:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">localhost</span></code> – tylko połączenia lokalne,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*</span></code> – wszystkie interfejsy sieciowe,</p></li>
+<li><p>lista adresów, np. <code class="docutils literal notranslate"><span class="pre">'192.168.1.10,localhost'</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">port</span></code></dt><dd><p>Port TCP używany przez PostgreSQL.</p>
+<p>Domyślna wartość:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">5432</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">max_connections</span></code></dt><dd><p>Maksymalna liczba jednoczesnych połączeń z bazą danych.</p>
+<p>Zbyt wysoka wartość może zwiększać zużycie pamięci.</p>
+</dd>
+</dl>
+</section>
+<section id="pamiec-i-wydajnosc">
+<h4>Pamięć i wydajność<a class="headerlink" href="#pamiec-i-wydajnosc" title="Link to this heading">¶</a></h4>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">shared_buffers</span></code></dt><dd><p>Ilość pamięci RAM używanej przez PostgreSQL do buforowania danych.</p>
+<p>Typowe wartości:</p>
+<ul class="simple">
+<li><p>128MB – środowiska testowe,</p></li>
+<li><p>25% pamięci RAM – środowiska produkcyjne.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">work_mem</span></code></dt><dd><p>Ilość pamięci wykorzystywanej przez operacje sortowania i zapytania.</p>
+<p>Parametr jest przydzielany dla pojedynczej operacji.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">maintenance_work_mem</span></code></dt><dd><p>Pamięć używana podczas operacji administracyjnych, np.:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VACUUM</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">INDEX</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">effective_cache_size</span></code></dt><dd><p>Szacowany rozmiar pamięci podręcznej dostępnej dla PostgreSQL.</p>
+<p>Parametr pomaga optymalizatorowi zapytań wybierać odpowiednie plany wykonania.</p>
+</dd>
+</dl>
+</section>
+<section id="logowanie">
+<h4>Logowanie<a class="headerlink" href="#logowanie" title="Link to this heading">¶</a></h4>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">logging_collector</span></code></dt><dd><p>Włącza zapisywanie logów do plików.</p>
+<p>Dostępne wartości:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">on</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">off</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">log_directory</span></code></dt><dd><p>Katalog przechowywania logów.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">log_filename</span></code></dt><dd><p>Wzorzec nazw plików logów.</p>
+<p>Przykład:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">log_filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;postgresql-%Y-%m-%d.log&#39;</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">log_min_duration_statement</span></code></dt><dd><p>Określa minimalny czas wykonania zapytania (w ms), po którym zostanie ono zapisane w logach.</p>
+<p>Przykład:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">log_min_duration_statement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1000</span>
+</pre></div>
+</div>
+<p>Wartość <code class="docutils literal notranslate"><span class="pre">1000</span></code> oznacza logowanie zapytań trwających dłużej niż 1 sekundę.</p>
+</dd>
+</dl>
+</section>
+<section id="bezpieczenstwo">
+<h4>Bezpieczeństwo<a class="headerlink" href="#bezpieczenstwo" title="Link to this heading">¶</a></h4>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">password_encryption</span></code></dt><dd><p>Algorytm szyfrowania haseł użytkowników.</p>
+<p>Zalecana wartość:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">password_encryption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">scram-sha-256</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ssl</span></code></dt><dd><p>Włącza obsługę połączeń SSL/TLS.</p>
+<p>Dostępne wartości:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">on</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">off</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ssl_cert_file</span></code> / <code class="docutils literal notranslate"><span class="pre">ssl_key_file</span></code></dt><dd><p>Ścieżki do certyfikatu i klucza prywatnego SSL.</p>
+</dd>
+</dl>
+</section>
+<section id="replikacja-i-wal">
+<h4>Replikacja i WAL<a class="headerlink" href="#replikacja-i-wal" title="Link to this heading">¶</a></h4>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">wal_level</span></code></dt><dd><p>Określa poziom szczegółowości Write-Ahead Log (WAL).</p>
+<p>Dostępne wartości:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">minimal</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">replica</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logical</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">max_wal_size</span></code></dt><dd><p>Maksymalny rozmiar plików WAL przed wykonaniem checkpointu.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">archive_mode</span></code></dt><dd><p>Włącza archiwizację WAL.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">archive_command</span></code></dt><dd><p>Polecenie wykonywane podczas archiwizacji plików WAL.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="przykladowa-konfiguracja">
+<h3>Przykładowa konfiguracja<a class="headerlink" href="#przykladowa-konfiguracja" title="Link to this heading">¶</a></h3>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">listen_addresses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="na">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">5432</span>
+<span class="na">max_connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">200</span>
+
+<span class="na">shared_buffers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1GB</span>
+<span class="na">work_mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">16MB</span>
+<span class="na">maintenance_work_mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">256MB</span>
+
+<span class="na">logging_collector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">on</span>
+<span class="na">log_directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;log&#39;</span>
+
+<span class="na">ssl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">on</span>
+<span class="na">password_encryption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">scram-sha-256</span>
+
+<span class="na">wal_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">replica</span>
+<span class="na">max_wal_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2GB</span>
+</pre></div>
+</div>
+</section>
+<section id="weryfikacja-konfiguracji">
+<h3>Weryfikacja konfiguracji<a class="headerlink" href="#weryfikacja-konfiguracji" title="Link to this heading">¶</a></h3>
+<p>Po zmianie parametrów konfigurację można przeładować bez restartu serwera:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>SELECT<span class="w"> </span>pg_reload_conf<span class="o">()</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Niektóre parametry wymagają pełnego restartu PostgreSQL.</p>
+<p>Aktualne wartości parametrów można sprawdzić poleceniem:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">shared_buffers</span><span class="p">;</span>
+<span class="k">SHOW</span><span class="w"> </span><span class="n">wal_level</span><span class="p">;</span>
+<span class="k">SHOW</span><span class="w"> </span><span class="n">max_connections</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="pg-hba-conf">
+<h2>pg_hba.conf<a class="headerlink" href="#pg-hba-conf" title="Link to this heading">¶</a></h2>
+<p>Plik <code class="docutils literal notranslate"><span class="pre">pg_hba.conf</span></code> (Host-Based Authentication) odpowiada za kontrolę dostępu do serwera PostgreSQL.</p>
+<p>Definiuje:</p>
+<ul class="simple">
+<li><p>kto może połączyć się z bazą danych,</p></li>
+<li><p>z jakiego adresu IP,</p></li>
+<li><p>do jakiej bazy danych,</p></li>
+<li><p>przy użyciu jakiej metody uwierzytelniania.</p></li>
+</ul>
+<p>Lokalizację aktywnego pliku można sprawdzić poleceniem:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">hba_file</span><span class="p">;</span>
+</pre></div>
+</div>
+<section id="skladnia-wpisu">
+<h3>Składnia wpisu<a class="headerlink" href="#skladnia-wpisu" title="Link to this heading">¶</a></h3>
+<p>Każdy wpis w <code class="docutils literal notranslate"><span class="pre">pg_hba.conf</span></code> ma następującą strukturę:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TYPE</span>    <span class="n">DATABASE</span>    <span class="n">USER</span>    <span class="n">ADDRESS</span>    <span class="n">METHOD</span>
+</pre></div>
+</div>
+<p>Znaczenie pól:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">TYPE</span></code></dt><dd><p>Typ połączenia.</p>
+<p>Dostępne wartości:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span></code> – połączenia lokalne (Unix socket),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">host</span></code> – połączenia TCP/IP,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hostssl</span></code> – połączenia TCP/IP z SSL,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hostnossl</span></code> – połączenia TCP/IP bez SSL.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">DATABASE</span></code></dt><dd><p>Nazwa bazy danych, do której użytkownik może się połączyć.</p>
+<p>Możliwe wartości:</p>
+<ul class="simple">
+<li><p>konkretna nazwa bazy,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">all</span></code> – wszystkie bazy,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sameuser</span></code> – baza o nazwie zgodnej z użytkownikiem.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">USER</span></code></dt><dd><p>Użytkownik lub rola PostgreSQL.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ADDRESS</span></code></dt><dd><p>Adres IP lub zakres sieci w notacji CIDR.</p>
+<p>Przykłady:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">127.0.0.1/32</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">192.168.1.0/24</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0.0.0.0/0</span></code> – wszystkie adresy.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">METHOD</span></code></dt><dd><p>Metoda uwierzytelniania użytkownika.</p>
+</dd>
+</dl>
+</section>
+<section id="najczesciej-uzywane-metody-uwierzytelniania">
+<h3>Najczęściej używane metody uwierzytelniania<a class="headerlink" href="#najczesciej-uzywane-metody-uwierzytelniania" title="Link to this heading">¶</a></h3>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">trust</span></code></dt><dd><p>Zezwala na połączenie bez uwierzytelniania.</p>
+<p>Zalecane wyłącznie w środowiskach testowych.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">reject</span></code></dt><dd><p>Odrzuca połączenie.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">md5</span></code></dt><dd><p>Uwierzytelnianie przy użyciu hasła MD5.</p>
+<p>Metoda starsza i mniej bezpieczna niż SCRAM.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">scram-sha-256</span></code></dt><dd><p>Nowoczesna metoda uwierzytelniania oparta na SCRAM.</p>
+<p>Zalecana dla nowych instalacji PostgreSQL.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">peer</span></code></dt><dd><p>Uwierzytelnianie na podstawie użytkownika systemowego.</p>
+<p>Najczęściej używane dla lokalnych połączeń Linux/Unix.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ident</span></code></dt><dd><p>Mapowanie użytkownika systemowego przy użyciu <code class="docutils literal notranslate"><span class="pre">pg_ident.conf</span></code>.</p>
+</dd>
+</dl>
+</section>
+<section id="id1">
+<h3>Przykładowa konfiguracja<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># Połączenia lokalne</span>
+<span class="na">local   all             postgres                        peer</span>
+
+<span class="c1"># Połączenia localhost IPv4</span>
+<span class="na">host    all             all         127.0.0.1/32        scram-sha-256</span>
+
+<span class="c1"># Połączenia localhost IPv6</span>
+<span class="na">host    all             all</span><span class="w">         </span><span class="o">:</span><span class="s">:1/128             scram-sha-256</span>
+
+<span class="c1"># Sieć lokalna</span>
+<span class="na">host    aplikacja       app_user    192.168.1.0/24      scram-sha-256</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Najlepsze praktyki<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Używaj <code class="docutils literal notranslate"><span class="pre">scram-sha-256</span></code> zamiast <code class="docutils literal notranslate"><span class="pre">md5</span></code>.</p></li>
+<li><p>Ograniczaj dostęp do konkretnych adresów IP.</p></li>
+<li><p>Nie używaj <code class="docutils literal notranslate"><span class="pre">trust</span></code> w środowiskach produkcyjnych.</p></li>
+<li><p>Stosuj <code class="docutils literal notranslate"><span class="pre">hostssl</span></code> dla połączeń zdalnych.</p></li>
+<li><p>Po zmianie konfiguracji wykonuj reload konfiguracji:</p></li>
+</ol>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">pg_reload_conf</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="pg-ident-conf">
+<h2>pg_ident.conf<a class="headerlink" href="#pg-ident-conf" title="Link to this heading">¶</a></h2>
+<p>Plik <code class="docutils literal notranslate"><span class="pre">pg_ident.conf</span></code> umożliwia mapowanie użytkowników systemowych na role PostgreSQL.</p>
+<p>Najczęściej używany jest razem z metodami uwierzytelniania:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">peer</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ident</span></code>.</p></li>
+</ul>
+<p>Lokalizację aktywnego pliku można sprawdzić poleceniem:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SHOW</span><span class="w"> </span><span class="n">ident_file</span><span class="p">;</span>
+</pre></div>
+</div>
+<section id="zastosowanie">
+<h3>Zastosowanie<a class="headerlink" href="#zastosowanie" title="Link to this heading">¶</a></h3>
+<p>Mechanizm mapowania pozwala określić, który użytkownik systemowy może zostać powiązany z konkretną rolą PostgreSQL.</p>
+<p>Jest to szczególnie przydatne:</p>
+<ul class="simple">
+<li><p>w środowiskach Linux/Unix,</p></li>
+<li><p>przy automatyzacji administracyjnej,</p></li>
+<li><p>dla lokalnych połączeń bez użycia haseł.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Składnia wpisu<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAPNAME</span>    <span class="n">SYSTEM</span><span class="o">-</span><span class="n">USERNAME</span>    <span class="n">PG</span><span class="o">-</span><span class="n">USERNAME</span>
+</pre></div>
+</div>
+<p>Znaczenie pól:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">MAPNAME</span></code></dt><dd><p>Nazwa mapowania wykorzystywana w <code class="docutils literal notranslate"><span class="pre">pg_hba.conf</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">SYSTEM-USERNAME</span></code></dt><dd><p>Użytkownik systemu operacyjnego.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">PG-USERNAME</span></code></dt><dd><p>Rola PostgreSQL, na którą użytkownik ma zostać zmapowany.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Przykładowa konfiguracja<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># MAPNAME    SYSTEM-USERNAME    PG-USERNAME</span>
+<span class="na">admin_map    postgres           postgres</span>
+<span class="na">admin_map    deploy             db_admin</span>
+<span class="na">app_map      appuser            aplikacja</span>
+</pre></div>
+</div>
+<p>Przykład użycia w <code class="docutils literal notranslate"><span class="pre">pg_hba.conf</span></code>:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">local   all     all     peer map</span><span class="o">=</span><span class="s">admin_map</span>
+</pre></div>
+</div>
+<p>W powyższym przykładzie użytkownicy systemowi zdefiniowani w <code class="docutils literal notranslate"><span class="pre">admin_map</span></code> mogą logować się jako odpowiadające im role PostgreSQL.</p>
+</section>
+<section id="id5">
+<h3>Najlepsze praktyki<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Ograniczaj mapowania wyłącznie do wymaganych użytkowników.</p></li>
+<li><p>Nie mapuj użytkowników systemowych na role superuser bez uzasadnienia.</p></li>
+<li><p>Stosuj osobne role administracyjne i aplikacyjne.</p></li>
+<li><p>Dokumentuj wszystkie mapowania użytkowników.</p></li>
+<li><p>Regularnie przeglądaj konfigurację dostępu.</p></li>
+</ol>
+<div class="note admonition">
+<p class="admonition-title">Opracowanie</p>
+<p><strong>Autor:</strong> Michał Kraus
+<strong>Przedmiot:</strong> Bazy danych
+<strong>Data:</strong> maj 2026</p>
+</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sprawozdanie z laboratorium</a></h1>
+
+
+
+
+
+
+
+
+<h3>Nawigacja</h3>
+<p class="caption" role="heading"><span class="caption-text">Spis treści:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_1/index.html">Wprowadzenie</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Przegląd literaturowy</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_21/index.html">Sprzęt dla bazy danych</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Konfiguracja bazy danych PostgreSQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_23/index.html">Kontrola i konserwacja</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_24/index.html">Monitorowanie i diagnostyka</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_25/index.html">Wydajność, skalowanie i replikacja danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_26/index.html">Partycjonowanie danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_27/index.html">Bezpieczeństwo Baz Danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_28/index.html">Kopie zapasowe i odzyskiwanie danych</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_3/BD_PlanBazyDanych_zad1/index.html">Sprawozdanie: Projektowanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_4/BD_WprowadzanieBD/index.html">Rozdział 4: Implementacja fizyczna i zasilanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_5/BD_Zapytania/index.html">Rozdział 5: Zapytania do bazy danych</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Przegląd literaturowy</a><ul>
+      <li>Previous: <a href="../rozdzia%C5%82_21/index.html" title="poprzedni rozdział">Sprzęt dla bazy danych</a></li>
+      <li>Next: <a href="../rozdzia%C5%82_23/index.html" title="następny rozdział">Kontrola i konserwacja</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Szybkie wyszukiwanie</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Szukaj" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, Mąka Oskar.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/rozdział_2/rozdział_22/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

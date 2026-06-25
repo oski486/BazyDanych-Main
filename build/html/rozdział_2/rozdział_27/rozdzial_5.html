@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="pl" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5. Audyt, logowanie i wykrywanie anomalii &#8212; Sprawozdanie z laboratorium  - dokumentacja</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=cb25574f" />
+    <script src="../../_static/documentation_options.js?v=9893e7ba"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=a186e9ce"></script>
+    <link rel="index" title="Indeks" href="../../genindex.html" />
+    <link rel="search" title="Szukaj" href="../../search.html" />
+    <link rel="next" title="6. Bezpieczeństwo kopii zapasowych i Disaster Recovery" href="rozdzial_6.html" />
+    <link rel="prev" title="4. Kryptografia w bazach danych" href="rozdzial_4.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="audyt-logowanie-i-wykrywanie-anomalii">
+<h1>5. Audyt, logowanie i wykrywanie anomalii<a class="headerlink" href="#audyt-logowanie-i-wykrywanie-anomalii" title="Link to this heading">¶</a></h1>
+<p>Nawet najsilniejsze mechanizmy prewencyjne, takie jak kontrola dostępu czy szyfrowanie, nie gwarantują stuprocentowego bezpieczeństwa. W przypadku udanego ataku lub błędu wewnętrznego (tzw. zagrożenia <em>Insider Threat</em>), kluczowe staje się odtworzenie przebiegu zdarzeń. Temu celowi służą mechanizmy audytu i logowania, które stanowią fundament dla systemów wykrywania anomalii oraz zapewniają niezaprzeczalność (ang. <em>Non-repudiation</em>) operacji wykonywanych na danych.</p>
+<section id="znaczenie-audytu-i-rodzaje-logow-bazodanowych">
+<h2>Znaczenie audytu i rodzaje logów bazodanowych<a class="headerlink" href="#znaczenie-audytu-i-rodzaje-logow-bazodanowych" title="Link to this heading">¶</a></h2>
+<p>Audytowanie bazy danych to proces polegający na monitorowaniu i rejestrowaniu akcji użytkowników oraz procesów systemowych. Nie należy mylić go z klasycznymi logami transakcyjnymi (np. WAL w PostgreSQL czy Redo Logs w Oracle), które służą do odtwarzania bazy po awarii. Audyt bezpieczeństwa skupia się na tym <strong>kto</strong>, <strong>kiedy</strong>, <strong>skąd</strong> i <strong>jaką</strong> operację wykonał.</p>
+<p>Większość nowoczesnych silników DBMS pozwala na granularną konfigurację logowania. Rejestrowane zdarzenia można podzielić na kilka kategorii:
+* <strong>Logi uwierzytelniania:</strong> Rejestrują udane i nieudane próby logowania (np. błędy <em>Access Denied</em>), co pozwala na szybkie wykrycie ataków typu brute-force.
+* <strong>Logi DDL (Data Definition Language):</strong> Śledzą zmiany w strukturze bazy (tworzenie i usuwanie tabel, modyfikacje uprawnień).
+* <strong>Logi DML (Data Manipulation Language):</strong> Najbardziej kosztowne wydajnościowo, ale niezbędne w systemach o wysokim rygorze bezpieczeństwa (np. bankowość, opieka zdrowotna). Pozwalają na śledzenie zapytań <code class="docutils literal notranslate"><span class="pre">SELECT</span></code>, <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> czy <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> na wrażliwych tabelach.</p>
+<p>Przykładowo, natywne logowanie w PostgreSQL jest często niewystarczające dla zaawansowanego audytu. W środowiskach produkcyjnych powszechnie stosuje się rozszerzenie <strong>pgAudit</strong> (PostgreSQL Audit Extension), które dostarcza szczegółowe logowanie sesji i obiektów przy użyciu standardowych mechanizmów logowania wbudowanych w silnik.</p>
+</section>
+<section id="centralizacja-logow-i-systemy-siem">
+<h2>Centralizacja logów i systemy SIEM<a class="headerlink" href="#centralizacja-logow-i-systemy-siem" title="Link to this heading">¶</a></h2>
+<p>Przechowywanie logów audytowych wyłącznie na tym samym serwerze, na którym działa baza danych, jest poważnym błędem architektonicznym. W przypadku udanej kompromitacji hosta (np. poprzez ucieczkę z kontenera opisaną w rozdziale 1), atakujący w pierwszej kolejności zaciera ślady, modyfikując lub usuwając pliki logów.</p>
+<p>Dlatego standardem rynkowym jest natychmiastowy eksport logów w czasie rzeczywistym do niezależnych systemów centralnych. Wykorzystuje się do tego architekturę SIEM (ang. <em>Security Information and Event Management</em>), z wykorzystaniem stosów technologicznych takich jak <strong>ELK</strong> (Elasticsearch, Logstash, Kibana) lub <strong>Splunk</strong>. Systemy te agregują logi nie tylko z baz danych, ale również z warstwy aplikacji, firewalli i systemów operacyjnych, pozwalając na korelację zdarzeń z różnych źródeł w celu identyfikacji złożonych ataków.</p>
+</section>
+<section id="database-activity-monitoring-dam-i-wykrywanie-anomalii">
+<h2>Database Activity Monitoring (DAM) i wykrywanie anomalii<a class="headerlink" href="#database-activity-monitoring-dam-i-wykrywanie-anomalii" title="Link to this heading">¶</a></h2>
+<p>Tradycyjna analiza logów jest procesem reaktywnym (po fakcie). Aby przejść na model proaktywny, stosuje się systemy DAM (ang. <em>Database Activity Monitoring</em>), które monitorują ruch do bazy danych z zewnątrz (np. analizując ruch sieciowy (tzw. <em>packet sniffing</em>) lub podpinając się pod pule pamięci silnika). Dzięki temu system DAM jest odseparowany od samej bazy, co zapobiega modyfikacji jego działania nawet po przejęciu uprawnień administratora bazy (DBA).</p>
+<p>Kluczową funkcją nowoczesnych systemów z tej kategorii jest <strong>wykrywanie anomalii w oparciu o analizę behawioralną (UEBA)</strong>. Zamiast opierać się wyłącznie na statycznych sygnaturach zagrożeń, systemy te wykorzystują algorytmy uczenia maszynowego do modelowania „normalnego” zachowania aplikacji i użytkowników.</p>
+<p>System wykryje anomalię i podniesie alarm (lub zablokuje zapytanie), gdy np.:
+* Aplikacja webowa, która zazwyczaj pobiera pojedyncze rekordy w zapytaniach <code class="docutils literal notranslate"><span class="pre">SELECT</span></code>, nagle próbuje wykonać zrzut (ang. <em>dump</em>) tysięcy wierszy z tabeli klientów – co może świadczyć o udanym wstrzyknięciu kodu (SQLi z rozdziału 2) i próbie eksfiltracji danych.
+* Użytkownik o uprawnieniach administracyjnych loguje się do bazy z nietypowej geolokalizacji lub poza standardowymi godzinami pracy.
+* Gwałtownie rośnie liczba odrzucanych połączeń lub błędów składniowych SQL z określonego adresu IP wewnątrz sieci.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sprawozdanie z laboratorium</a></h1>
+
+
+
+
+
+
+
+
+<h3>Nawigacja</h3>
+<p class="caption" role="heading"><span class="caption-text">Spis treści:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_1/index.html">Wprowadzenie</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Przegląd literaturowy</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_21/index.html">Sprzęt dla bazy danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_22/index.html">Konfiguracja bazy danych PostgreSQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_23/index.html">Kontrola i konserwacja</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_24/index.html">Monitorowanie i diagnostyka</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_25/index.html">Wydajność, skalowanie i replikacja danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_26/index.html">Partycjonowanie danych</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Bezpieczeństwo Baz Danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_28/index.html">Kopie zapasowe i odzyskiwanie danych</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_3/BD_PlanBazyDanych_zad1/index.html">Sprawozdanie: Projektowanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_4/BD_WprowadzanieBD/index.html">Rozdział 4: Implementacja fizyczna i zasilanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_5/BD_Zapytania/index.html">Rozdział 5: Zapytania do bazy danych</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Przegląd literaturowy</a><ul>
+  <li><a href="index.html">Bezpieczeństwo Baz Danych</a><ul>
+      <li>Previous: <a href="rozdzial_4.html" title="poprzedni rozdział">4. Kryptografia w bazach danych</a></li>
+      <li>Next: <a href="rozdzial_6.html" title="następny rozdział">6. Bezpieczeństwo kopii zapasowych i Disaster Recovery</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Szybkie wyszukiwanie</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Szukaj" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, Mąka Oskar.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/rozdział_2/rozdział_27/rozdzial_5.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

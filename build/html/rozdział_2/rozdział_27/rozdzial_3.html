@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html lang="pl" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3. Zarządzanie tożsamością, uwierzytelnianie i autoryzacja &#8212; Sprawozdanie z laboratorium  - dokumentacja</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=cb25574f" />
+    <script src="../../_static/documentation_options.js?v=9893e7ba"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=a186e9ce"></script>
+    <link rel="index" title="Indeks" href="../../genindex.html" />
+    <link rel="search" title="Szukaj" href="../../search.html" />
+    <link rel="next" title="4. Kryptografia w bazach danych" href="rozdzial_4.html" />
+    <link rel="prev" title="2. Ataki na bazy danych i luki w zabezpieczeniach" href="rozdzial_2.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="zarzadzanie-tozsamoscia-uwierzytelnianie-i-autoryzacja">
+<h1>3. Zarządzanie tożsamością, uwierzytelnianie i autoryzacja<a class="headerlink" href="#zarzadzanie-tozsamoscia-uwierzytelnianie-i-autoryzacja" title="Link to this heading">¶</a></h1>
+<p>Po zabezpieczeniu infrastruktury sieciowej oraz aplikacji przed atakami typu Injection, kolejną linią obrony jest ścisła kontrola dostępu do samych danych. W architekturze systemów bazodanowych proces ten opiera się na trzech filarach: zarządzaniu tożsamością (Identity Management), uwierzytelnianiu (Authentication) oraz autoryzacji (Authorization). Prawidłowa implementacja tych mechanizmów gwarantuje, że zasada najmniejszego uprzywilejowania (PoLP - Principle of Least Privilege) może być skutecznie egzekwowana w całym systemie.</p>
+<section id="uwierzytelnianie-w-bazach-danych">
+<h2>Uwierzytelnianie w bazach danych<a class="headerlink" href="#uwierzytelnianie-w-bazach-danych" title="Link to this heading">¶</a></h2>
+<p>Proces uwierzytelniania weryfikuje, czy podmiot (użytkownik końcowy, administrator lub usługa aplikacyjna) łączący się z bazą danych jest tym, za kogo się podaje. Współczesne silniki relacyjne (np. PostgreSQL, Oracle) oraz nierelacyjne odeszły od prostego przesyłania haseł tekstem jawnym (plaintext), wprowadzając bardziej zaawansowane mechanizmy:</p>
+<ul class="simple">
+<li><p><strong>Kryptograficzne protokoły uwierzytelniania:</strong> Zamiast przestarzałych algorytmów (np. MD5), nowoczesne wdrożenia wykorzystują mechanizmy typu SCRAM-SHA-256 (Salted Challenge Response Authentication Mechanism). SCRAM zapobiega atakom typu <em>replay attack</em> oraz minimalizuje skutki ewentualnej kradzieży skrótów z serwera, ponieważ hasło nigdy nie jest przesyłane w otwartej formie.</p></li>
+<li><p><strong>Integracja z dostawcami tożsamości (IdP):</strong> W środowiskach korporacyjnych unika się tworzenia lokalnych kont wewnątrz bazy (tzw. <em>database-native accounts</em>) dla użytkowników fizycznych. Zamiast tego silniki DBMS integruje się z centralnymi usługami katalogowymi (LDAP, Active Directory) lub wykorzystuje protokół Kerberos (np. poprzez GSSAPI). Pozwala to na centralne zarządzanie cyklem życia konta i automatyczne odbieranie dostępów w przypadku odejścia pracownika (tzw. <em>offboarding</em>).</p></li>
+<li><p><strong>Uwierzytelnianie certyfikatowe (mTLS - Mutual TLS):</strong> Standard powszechnie stosowany w architekturze mikroserwisowej do komunikacji <em>machine-to-machine</em>. Oprócz szyfrowania samego kanału (TLS), serwer bazy danych żąda i weryfikuje certyfikat klienta (X.509) wystawiony przez wewnętrzne, zaufane centrum certyfikacji (CA).</p></li>
+</ul>
+</section>
+<section id="autoryzacja-i-modele-kontroli-dostepu">
+<h2>Autoryzacja i modele kontroli dostępu<a class="headerlink" href="#autoryzacja-i-modele-kontroli-dostepu" title="Link to this heading">¶</a></h2>
+<p>Po udanym uwierzytelnieniu następuje faza autoryzacji, czyli weryfikacji, jakie operacje (SELECT, INSERT, UPDATE, DELETE) i na jakich obiektach (tabele, widoki, procedury) dany podmiot może wykonać.</p>
+<p><strong>Kontrola dostępu oparta na rolach (RBAC - Role-Based Access Control)</strong></p>
+<p>Model RBAC to absolutny standard w systemach zarządzania bazami danych. Zamiast nadawać uprawnienia (GRANT) bezpośrednio pojedynczym użytkownikom, tworzy się logiczne role odzwierciedlające funkcje biznesowe lub techniczne (np. <code class="docutils literal notranslate"><span class="pre">app_readonly</span></code>, <code class="docutils literal notranslate"><span class="pre">app_writer</span></code>, <code class="docutils literal notranslate"><span class="pre">dba_admin</span></code>). Następnie konta personalne lub serwisowe przypisuje się do tych ról. Taka abstrakcja drastycznie upraszcza audyt i zarządzanie uprawnieniami.</p>
+<p>Przykład implementacji RBAC (dialekt PostgreSQL):</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Utworzenie technicznej roli tylko do odczytu</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_readonly</span><span class="p">;</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="k">CONNECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_readonly</span><span class="p">;</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="k">USAGE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">SCHEMA</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_readonly</span><span class="p">;</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">TABLES</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">SCHEMA</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_readonly</span><span class="p">;</span>
+
+<span class="c1">-- Przypisanie użytkownika raportującego do przygotowanej roli</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="n">app_readonly</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">report_user</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="bezpieczenstwo-na-poziomie-wierszy-row-level-security">
+<h2>Bezpieczeństwo na poziomie wierszy (Row-Level Security)<a class="headerlink" href="#bezpieczenstwo-na-poziomie-wierszy-row-level-security" title="Link to this heading">¶</a></h2>
+<p>Tradycyjny model autoryzacji w bazach danych działa na poziomie całych struktur (np. blokuje lub zezwala na odczyt całej tabeli). Współczesne aplikacje, zwłaszcza budowane w modelu wielodostępnym (multi-tenant), często wymagają znacznie bardziej granularnej kontroli, aby użytkownik jednego klienta nie miał fizycznej możliwości odczytania rekordów należących do innego.</p>
+<p>Z pomocą przychodzi mechanizm Row-Level Security (RLS). Pozwala on na nakładanie polityk bezpieczeństwa bezpośrednio na wiersze danych. Silnik bazy automatycznie i w sposób przezroczysty dokleja zdefiniowane warunki do każdego zapytania. Kluczową zaletą RLS jest fakt, że uniemożliwia on ominięcie logiki izolacyjnej w warstwie aplikacji – nawet w przypadku wystąpienia luki SQL Injection.</p>
+<p>Przykład definicji RLS (dialekt PostgreSQL):</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Włączenie weryfikacji RLS dla krytycznej tabeli</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">ENABLE</span><span class="w"> </span><span class="k">ROW</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="k">SECURITY</span><span class="p">;</span>
+
+<span class="c1">-- Utworzenie polityki izolującej dane między użytkownikami</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="n">isolate_tenant_policy</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span>
+<span class="w">    </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">tenant_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">&#39;app.current_tenant&#39;</span><span class="p">)::</span><span class="nb">int</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="zarzadzanie-poswiadczeniami-aplikacji-secrets-management">
+<h2>Zarządzanie poświadczeniami aplikacji (Secrets Management)<a class="headerlink" href="#zarzadzanie-poswiadczeniami-aplikacji-secrets-management" title="Link to this heading">¶</a></h2>
+<p>Nawet najbardziej rygorystyczne mechanizmy wewnątrz samej bazy danych zawiodą, jeśli poświadczenia do niej (tzw. <em>connection strings</em>) zostaną umieszczone na stałe (hardcoded) w kodzie źródłowym i wypchnięte do repozytorium kodu.</p>
+<p>Zgodnie z dobrymi praktykami nurtu DevSecOps, środowiska produkcyjne powinny wykorzystywać zewnętrzne systemy zarządzania sekretami (np. HashiCorp Vault, AWS Secrets Manager). Narzędzia te pozwalają na dynamiczne generowanie tymczasowych, krótkożyjących poświadczeń (tzw. <em>dynamic secrets</em>). W takim scenariuszu aplikacja uwierzytelnia się do Vaulta i otrzymuje login oraz hasło do bazy danych, które wygasają np. po godzinie. Po tym czasie usługa zarządzająca automatycznie usuwa (REVOKE) te poświadczenia z silnika bazy, co radykalnie zmniejsza okno potencjalnego ataku w przypadku ich wycieku.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sprawozdanie z laboratorium</a></h1>
+
+
+
+
+
+
+
+
+<h3>Nawigacja</h3>
+<p class="caption" role="heading"><span class="caption-text">Spis treści:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_1/index.html">Wprowadzenie</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Przegląd literaturowy</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_21/index.html">Sprzęt dla bazy danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_22/index.html">Konfiguracja bazy danych PostgreSQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_23/index.html">Kontrola i konserwacja</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_24/index.html">Monitorowanie i diagnostyka</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_25/index.html">Wydajność, skalowanie i replikacja danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_26/index.html">Partycjonowanie danych</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Bezpieczeństwo Baz Danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_28/index.html">Kopie zapasowe i odzyskiwanie danych</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_3/BD_PlanBazyDanych_zad1/index.html">Sprawozdanie: Projektowanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_4/BD_WprowadzanieBD/index.html">Rozdział 4: Implementacja fizyczna i zasilanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_5/BD_Zapytania/index.html">Rozdział 5: Zapytania do bazy danych</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Przegląd literaturowy</a><ul>
+  <li><a href="index.html">Bezpieczeństwo Baz Danych</a><ul>
+      <li>Previous: <a href="rozdzial_2.html" title="poprzedni rozdział">2. Ataki na bazy danych i luki w zabezpieczeniach</a></li>
+      <li>Next: <a href="rozdzial_4.html" title="następny rozdział">4. Kryptografia w bazach danych</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Szybkie wyszukiwanie</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Szukaj" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, Mąka Oskar.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/rozdział_2/rozdział_27/rozdzial_3.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

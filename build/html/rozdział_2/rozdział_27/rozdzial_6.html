@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="pl" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6. Bezpieczeństwo kopii zapasowych i Disaster Recovery &#8212; Sprawozdanie z laboratorium  - dokumentacja</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=cb25574f" />
+    <script src="../../_static/documentation_options.js?v=9893e7ba"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=a186e9ce"></script>
+    <link rel="index" title="Indeks" href="../../genindex.html" />
+    <link rel="search" title="Szukaj" href="../../search.html" />
+    <link rel="next" title="Kopie zapasowe i odzyskiwanie danych" href="../rozdzia%C5%82_28/index.html" />
+    <link rel="prev" title="5. Audyt, logowanie i wykrywanie anomalii" href="rozdzial_5.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="bezpieczenstwo-kopii-zapasowych-i-disaster-recovery">
+<h1>6. Bezpieczeństwo kopii zapasowych i Disaster Recovery<a class="headerlink" href="#bezpieczenstwo-kopii-zapasowych-i-disaster-recovery" title="Link to this heading">¶</a></h1>
+<p>Systemy prewencyjne i detekcyjne nie zawsze są w stanie zatrzymać zaawansowane ataki, takie jak ransomware, czy też zapobiec fizycznym awariom infrastruktury. W takich scenariuszach ostateczną linią obrony stają się mechanizmy odtwarzania danych po awarii. Bezpieczeństwo samych kopii zapasowych jest równie krytyczne co bezpieczeństwo głównej instancji bazy danych – skompromitowany backup często ostatecznie przekreśla szanse na powrót organizacji do normalnego funkcjonowania operacyjnego.</p>
+<section id="zasada-3-2-1-i-niezmiennosc-kopii-immutable-backups">
+<h2>Zasada 3-2-1 i niezmienność kopii (Immutable Backups)<a class="headerlink" href="#zasada-3-2-1-i-niezmiennosc-kopii-immutable-backups" title="Link to this heading">¶</a></h2>
+<p>Klasyczna reguła 3-2-1 (trzy kopie, na dwóch różnych nośnikach, z czego jedna w innej lokalizacji fizycznej lub geograficznej) pozostaje fundamentem ochrony danych. Jednakże, w dobie zaawansowanych ataków kryptograficznych, wymaga ona uzupełnienia o koncepcję niezmienności (ang. <em>Immutability</em>).</p>
+<p>Współczesne złośliwe oprogramowanie często priorytetyzuje poszukiwanie dysków sieciowych oraz zasobów chmurowych z kopiami zapasowymi, aby je usunąć lub zaszyfrować przed zaatakowaniem głównego klastra bazy danych. Odpowiedzią inżynieryjną na to zagrożenie jest technologia zapisu WORM (ang. <em>Write Once, Read Many</em>). W nowoczesnej architekturze chmurowej (np. za pomocą mechanizmu AWS S3 Object Lock) gwarantuje ona, że zapisany plik backupu nie może zostać w żaden sposób zmodyfikowany ani usunięty przez zdefiniowany okres retencji. Ochrona ta działa nawet w przypadku całkowitej kompromitacji konta z najwyższymi uprawnieniami (ang. <em>root account compromise</em>).</p>
+</section>
+<section id="szyfrowanie-archiwow-i-zarzadzanie-kluczami">
+<h2>Szyfrowanie archiwów i zarządzanie kluczami<a class="headerlink" href="#szyfrowanie-archiwow-i-zarzadzanie-kluczami" title="Link to this heading">¶</a></h2>
+<p>Ponieważ logiczne i fizyczne kopie zapasowe opuszczają bezpieczne środowisko serwerowni lub głęboko izolowanej podsieci (VPC, o której mowa w rozdziale 1), absolutnym wymogiem jest ich szyfrowanie w spoczynku (ang. <em>Data at Rest Encryption</em>). Wykonanie zwykłego zrzutu bazy w postaci czystego tekstu i przesłanie go na zewnątrz to drastyczne ryzyko wycieku, uderzające bezpośrednio w postulat poufności.</p>
+<p>W nowoczesnych wdrożeniach archiwizacji stosuje się dedykowane systemy KMS (ang. <em>Key Management Service</em>). Klucze szyfrujące używane do ochrony backupów powinny być ściśle odseparowane od infrastruktury samego klastra bazodanowego. Dodatkowo podczas procesu odtwarzania konieczna jest weryfikacja integralności archiwów przy użyciu funkcji skrótu (np. SHA-256), co pozwala upewnić się, że paczka danych nie uległa uszkodzeniu na etapie przesyłania.</p>
+</section>
+<section id="disaster-recovery-dr-i-wskazniki-rto-rpo">
+<h2>Disaster Recovery (DR) i wskaźniki RTO/RPO<a class="headerlink" href="#disaster-recovery-dr-i-wskazniki-rto-rpo" title="Link to this heading">¶</a></h2>
+<p>Kopia zapasowa to jedynie nośnik danych; z perspektywy ciągłości biznesowej (ang. <em>Business Continuity</em>) liczy się sprawdzony proces ich przywracania. Architektura Disaster Recovery dla baz danych opiera się na dwóch krytycznych metrykach:</p>
+<ul class="simple">
+<li><p><strong>RPO (Recovery Point Objective):</strong> Maksymalny akceptowalny czas, z którego dane mogą zostać bezpowrotnie utracone. Minimalizację tego wskaźnika do okolic zera osiąga się poprzez ciągłą strumieniową archiwizację logów transakcyjnych (np. mechanizm <em>WAL archiving</em> w PostgreSQL).</p></li>
+<li><p><strong>RTO (Recovery Time Objective):</strong> Czas niezbędny na przywrócenie systemów bazodanowych do pełnego działania operacyjnego po awarii.</p></li>
+</ul>
+<p>Dla systemów o rygorystycznym RTO (wymagających dostępności mierzonej w sekundach) tradycyjne odtwarzanie z plików jest niewystarczające. Stosuje się wówczas architekturę klastrów rozproszonych w modelach <em>Active-Passive</em> (ciągła, asynchroniczna replikacja do zapasowego centrum danych) lub <em>Active-Active</em> (synchroniczny zapis w wielu lokalizacjach, wymagający specjalnego rozwiązywania problemów ze spójnością i opóźnieniami sieciowymi, tzw. <em>split-brain</em>).</p>
+<p>Niezależnie od stopnia skomplikowania architektury chmurowej, każda polityka Disaster Recovery pozostaje martwym dokumentem, dopóki nie zostanie poddana rygorystycznym, regularnym i udokumentowanym testom odtworzeniowym (<em>Disaster Recovery Drills</em>) w odizolowanym środowisku.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sprawozdanie z laboratorium</a></h1>
+
+
+
+
+
+
+
+
+<h3>Nawigacja</h3>
+<p class="caption" role="heading"><span class="caption-text">Spis treści:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_1/index.html">Wprowadzenie</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Przegląd literaturowy</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_21/index.html">Sprzęt dla bazy danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_22/index.html">Konfiguracja bazy danych PostgreSQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_23/index.html">Kontrola i konserwacja</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_24/index.html">Monitorowanie i diagnostyka</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_25/index.html">Wydajność, skalowanie i replikacja danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_26/index.html">Partycjonowanie danych</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Bezpieczeństwo Baz Danych</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rozdzia%C5%82_28/index.html">Kopie zapasowe i odzyskiwanie danych</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_3/BD_PlanBazyDanych_zad1/index.html">Sprawozdanie: Projektowanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_4/BD_WprowadzanieBD/index.html">Rozdział 4: Implementacja fizyczna i zasilanie bazy danych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rozdzia%C5%82_5/BD_Zapytania/index.html">Rozdział 5: Zapytania do bazy danych</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Przegląd literaturowy</a><ul>
+  <li><a href="index.html">Bezpieczeństwo Baz Danych</a><ul>
+      <li>Previous: <a href="rozdzial_5.html" title="poprzedni rozdział">5. Audyt, logowanie i wykrywanie anomalii</a></li>
+      <li>Next: <a href="../rozdzia%C5%82_28/index.html" title="następny rozdział">Kopie zapasowe i odzyskiwanie danych</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Szybkie wyszukiwanie</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Szukaj" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, Mąka Oskar.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/rozdział_2/rozdział_27/rozdzial_6.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

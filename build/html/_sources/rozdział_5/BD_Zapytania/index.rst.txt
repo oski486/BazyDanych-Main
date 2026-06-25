@@ -1,0 +1,57 @@
+========================================================================
+Rozdział 5: Zapytania do bazy danych
+========================================================================
+
+:Autorzy:
+    1. Oskar Mąka
+    2. Daniel Szokało
+    3. Dawid Szokało
+:Kierunek: Informatyka Techniczna, Politechnika Wrocławska
+:Przedmiot: Bazy Danych / Projekt Laboratoryjny
+
+Wprowadzenie
+============
+Niniejszy rozdział stanowi finalny etap weryfikacji funkcjonalności zaprojektowanego systemu bazodanowego dla sklepu elektronicznego. Celem tej części projektu jest demonstracja możliwości analitycznych struktury za pomocą zaawansowanych zapytań SQL, realizowanych wprost ze środowiska języka Python.
+
+Środowisko uruchomieniowe i architektura
+========================================
+Zapytania zostały przygotowane, przetestowane i wdrożone w formie niezależnego modułu napisanego w języku Python. Środowiskiem uruchomieniowym był serwer akademicki udostępniający platformę JupyterLab. 
+
+* **Link do repozytorium z modułem:** `https://github.com/oski486/BD_Zapytania`
+
+Moduł komunikuje się zarówno z silnikiem SQLite (przy użyciu biblioteki ``sqlite3``) jak i ze zdalnym klastrem PostgreSQL (przy użyciu biblioteki ``psycopg2``). 
+
+Złożoność zapytań SQL
+=====================
+Aby w pełni zademonstrować możliwości relacyjnych baz danych, przygotowane funkcje wychodzą poza proste zapytania typu SELECT. Zgodnie z wymaganiami projektowymi zastosowano:
+
+1. **Selekcję i funkcje wierszowe:** m.in. operacje na ciągach znaków (``UPPER()``), zaokrąglania (``ROUND()``) oraz formatowanie i ekstrakcję dat (``TO_CHAR()``).
+2. **Funkcje agregujące:** m.in. zliczanie elementów, sumowanie przychodów, wyliczanie średniej oceny (``SUM()``, ``AVG()``, ``COUNT()``) w połączeniu z klauzulą ``GROUP BY`` oraz ``HAVING``.
+3. **Zaawansowane złączenia (Joins):** łączenie wielu tabel (nawet do 5 w jednym zapytaniu) z wykorzystaniem mechanizmów ``INNER JOIN`` oraz ``LEFT JOIN``.
+4. **Operatory zbiorowe:** użyto pełnego spektrum operacji na zbiorach wynikowych: ``UNION``, ``EXCEPT`` (różnica zbiorów) oraz ``INTERSECT`` (część wspólna).
+5. **Podzapytania (Subqueries):** wykorzystano zagnieżdżone zapytania w klauzulach ``WHERE`` (``IN``, ``NOT IN``), a także podzapytania wewnątrz klauzuli ``FROM`` traktowane jako wirtualne tabele źródłowe.
+
+Dokumentacja modułu zapytań (Auto-Sphinx)
+=========================================
+Poniższa dokumentacja funkcji operujących na bazie danych została wygenerowana automatycznie z użyciem narzędzia Sphinx, na podstawie docstringów umieszczonych bezpośrednio w kodzie źródłowym modułu ``db_queries.py``.
+
+.. automodule:: db_queries
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Funkcje dedykowane dla SQLite
+-----------------------------
+.. autofunction:: db_queries.get_top_spending_clients_sqlite
+.. autofunction:: db_queries.get_clients_without_opinions_sqlite
+.. autofunction:: db_queries.get_product_revenue_report_sqlite
+.. autofunction:: db_queries.get_categories_without_stock_sqlite
+.. autofunction:: db_queries.get_order_full_details_sqlite
+
+Funkcje dedykowane dla PostgreSQL
+---------------------------------
+.. autofunction:: db_queries.get_monthly_sales_summary_pg
+.. autofunction:: db_queries.get_products_needing_attention_pg
+.. autofunction:: db_queries.get_best_reviewed_products_pg
+.. autofunction:: db_queries.get_popular_payment_for_category_pg
+.. autofunction:: db_queries.get_clients_multi_delivery_pg
