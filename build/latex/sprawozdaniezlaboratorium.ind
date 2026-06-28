@@ -6,34 +6,34 @@
 
   \bigletter D
   \item \spxentry{db\_queries}
-    \subitem \spxentry{module}, \hyperpage{56}
+    \subitem \spxentry{module}, \hyperpage{58}
 
   \indexspace
   \bigletter G
   \item \spxentry{get\_best\_reviewed\_products\_pg()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
   \item \spxentry{get\_categories\_without\_stock\_sqlite()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
   \item \spxentry{get\_clients\_multi\_delivery\_pg()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
   \item \spxentry{get\_clients\_without\_opinions\_sqlite()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
   \item \spxentry{get\_monthly\_sales\_summary\_pg()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
   \item \spxentry{get\_order\_full\_details\_sqlite()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
   \item \spxentry{get\_popular\_payment\_for\_category\_pg()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
   \item \spxentry{get\_product\_revenue\_report\_sqlite()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
   \item \spxentry{get\_products\_needing\_attention\_pg()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
   \item \spxentry{get\_top\_spending\_clients\_sqlite()}\spxextra{w module db\_queries}, 
-		\hyperpage{56, 57}
+		\hyperpage{58, 59}
 
   \indexspace
   \bigletter M
   \item \spxentry{module}
-    \subitem \spxentry{db\_queries}, \hyperpage{56}
+    \subitem \spxentry{db\_queries}, \hyperpage{58}
 
 \end{sphinxtheindex}

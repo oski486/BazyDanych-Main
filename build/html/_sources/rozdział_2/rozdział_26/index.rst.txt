@@ -1,6 +1,0 @@
-
-Partycjonowanie danych
-===========================
-
-
-

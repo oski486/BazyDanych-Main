@@ -1,22 +1,22 @@
-\indexentry{module@\spxentry{module}!db\_queries@\spxentry{db\_queries}|hyperpage}{56}
-\indexentry{db\_queries@\spxentry{db\_queries}!module@\spxentry{module}|hyperpage}{56}
-\indexentry{get\_best\_reviewed\_products\_pg() (w module db\_queries)@\spxentry{get\_best\_reviewed\_products\_pg()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_categories\_without\_stock\_sqlite() (w module db\_queries)@\spxentry{get\_categories\_without\_stock\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_clients\_multi\_delivery\_pg() (w module db\_queries)@\spxentry{get\_clients\_multi\_delivery\_pg()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_clients\_without\_opinions\_sqlite() (w module db\_queries)@\spxentry{get\_clients\_without\_opinions\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_monthly\_sales\_summary\_pg() (w module db\_queries)@\spxentry{get\_monthly\_sales\_summary\_pg()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_order\_full\_details\_sqlite() (w module db\_queries)@\spxentry{get\_order\_full\_details\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_popular\_payment\_for\_category\_pg() (w module db\_queries)@\spxentry{get\_popular\_payment\_for\_category\_pg()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_product\_revenue\_report\_sqlite() (w module db\_queries)@\spxentry{get\_product\_revenue\_report\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_products\_needing\_attention\_pg() (w module db\_queries)@\spxentry{get\_products\_needing\_attention\_pg()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_top\_spending\_clients\_sqlite() (w module db\_queries)@\spxentry{get\_top\_spending\_clients\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{56}
-\indexentry{get\_top\_spending\_clients\_sqlite() (w module db\_queries)@\spxentry{get\_top\_spending\_clients\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{57}
-\indexentry{get\_clients\_without\_opinions\_sqlite() (w module db\_queries)@\spxentry{get\_clients\_without\_opinions\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{57}
-\indexentry{get\_product\_revenue\_report\_sqlite() (w module db\_queries)@\spxentry{get\_product\_revenue\_report\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{57}
-\indexentry{get\_categories\_without\_stock\_sqlite() (w module db\_queries)@\spxentry{get\_categories\_without\_stock\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{57}
-\indexentry{get\_order\_full\_details\_sqlite() (w module db\_queries)@\spxentry{get\_order\_full\_details\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{57}
-\indexentry{get\_monthly\_sales\_summary\_pg() (w module db\_queries)@\spxentry{get\_monthly\_sales\_summary\_pg()}\spxextra{w module db\_queries}|hyperpage}{57}
-\indexentry{get\_products\_needing\_attention\_pg() (w module db\_queries)@\spxentry{get\_products\_needing\_attention\_pg()}\spxextra{w module db\_queries}|hyperpage}{57}
-\indexentry{get\_best\_reviewed\_products\_pg() (w module db\_queries)@\spxentry{get\_best\_reviewed\_products\_pg()}\spxextra{w module db\_queries}|hyperpage}{57}
-\indexentry{get\_popular\_payment\_for\_category\_pg() (w module db\_queries)@\spxentry{get\_popular\_payment\_for\_category\_pg()}\spxextra{w module db\_queries}|hyperpage}{57}
-\indexentry{get\_clients\_multi\_delivery\_pg() (w module db\_queries)@\spxentry{get\_clients\_multi\_delivery\_pg()}\spxextra{w module db\_queries}|hyperpage}{57}
+\indexentry{module@\spxentry{module}!db\_queries@\spxentry{db\_queries}|hyperpage}{58}
+\indexentry{db\_queries@\spxentry{db\_queries}!module@\spxentry{module}|hyperpage}{58}
+\indexentry{get\_best\_reviewed\_products\_pg() (w module db\_queries)@\spxentry{get\_best\_reviewed\_products\_pg()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_categories\_without\_stock\_sqlite() (w module db\_queries)@\spxentry{get\_categories\_without\_stock\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_clients\_multi\_delivery\_pg() (w module db\_queries)@\spxentry{get\_clients\_multi\_delivery\_pg()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_clients\_without\_opinions\_sqlite() (w module db\_queries)@\spxentry{get\_clients\_without\_opinions\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_monthly\_sales\_summary\_pg() (w module db\_queries)@\spxentry{get\_monthly\_sales\_summary\_pg()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_order\_full\_details\_sqlite() (w module db\_queries)@\spxentry{get\_order\_full\_details\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_popular\_payment\_for\_category\_pg() (w module db\_queries)@\spxentry{get\_popular\_payment\_for\_category\_pg()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_product\_revenue\_report\_sqlite() (w module db\_queries)@\spxentry{get\_product\_revenue\_report\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_products\_needing\_attention\_pg() (w module db\_queries)@\spxentry{get\_products\_needing\_attention\_pg()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_top\_spending\_clients\_sqlite() (w module db\_queries)@\spxentry{get\_top\_spending\_clients\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{58}
+\indexentry{get\_top\_spending\_clients\_sqlite() (w module db\_queries)@\spxentry{get\_top\_spending\_clients\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{59}
+\indexentry{get\_clients\_without\_opinions\_sqlite() (w module db\_queries)@\spxentry{get\_clients\_without\_opinions\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{59}
+\indexentry{get\_product\_revenue\_report\_sqlite() (w module db\_queries)@\spxentry{get\_product\_revenue\_report\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{59}
+\indexentry{get\_categories\_without\_stock\_sqlite() (w module db\_queries)@\spxentry{get\_categories\_without\_stock\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{59}
+\indexentry{get\_order\_full\_details\_sqlite() (w module db\_queries)@\spxentry{get\_order\_full\_details\_sqlite()}\spxextra{w module db\_queries}|hyperpage}{59}
+\indexentry{get\_monthly\_sales\_summary\_pg() (w module db\_queries)@\spxentry{get\_monthly\_sales\_summary\_pg()}\spxextra{w module db\_queries}|hyperpage}{59}
+\indexentry{get\_products\_needing\_attention\_pg() (w module db\_queries)@\spxentry{get\_products\_needing\_attention\_pg()}\spxextra{w module db\_queries}|hyperpage}{59}
+\indexentry{get\_best\_reviewed\_products\_pg() (w module db\_queries)@\spxentry{get\_best\_reviewed\_products\_pg()}\spxextra{w module db\_queries}|hyperpage}{59}
+\indexentry{get\_popular\_payment\_for\_category\_pg() (w module db\_queries)@\spxentry{get\_popular\_payment\_for\_category\_pg()}\spxextra{w module db\_queries}|hyperpage}{59}
+\indexentry{get\_clients\_multi\_delivery\_pg() (w module db\_queries)@\spxentry{get\_clients\_multi\_delivery\_pg()}\spxextra{w module db\_queries}|hyperpage}{59}

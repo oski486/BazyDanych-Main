@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.6.24)  25 JUN 2026 12:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.6.24)  28 JUN 2026 21:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -871,26 +871,26 @@ File: t1txtt.fd 2000/12/15 v3.1
 
 ]
 Chapter 1.
-[3] [4]
+LaTeX Font Info:    Trying to load font information for TS1+qtm on input line 1
+09.
+(/usr/share/texmf/tex/latex/tex-gyre/ts1qtm.fd
+File: ts1qtm.fd 2009/09/25 v1.2 font definition file for TS1/qtm
+) [3{/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-ts1.enc}] [4]
 Chapter 2.
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--154
+Underfull \hbox (badness 10000) in paragraph at lines 174--176
 \T1/qtm/m/n/10 Wspóªczesne systemy zarz¡dzania bazami danych (DBMS) stanowi¡ fu
 ndament operacyjny wi¦kszo±ci
  []
 
-LaTeX Font Info:    Trying to load font information for TS1+qtm on input line 1
-58.
-(/usr/share/texmf/tex/latex/tex-gyre/ts1qtm.fd
-File: ts1qtm.fd 2009/09/25 v1.2 font definition file for TS1/qtm
-) [5
+[5
 
-{/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-ts1.enc}] [6] [7] [8] [9] [10]
+] [6] [7] [8] [9] [10]
 LaTeX Font Info:    Font shape `T1/txtt/m/it' in size <10> not available
-(Font)              Font shape `T1/txtt/m/sl' tried instead on input line 554.
+(Font)              Font shape `T1/txtt/m/sl' tried instead on input line 576.
  [11]
 LaTeX Font Info:    Font shape `T1/txtt/b/n' in size <10> not available
-(Font)              Font shape `T1/txtt/bx/n' tried instead on input line 579.
+(Font)              Font shape `T1/txtt/bx/n' tried instead on input line 601.
  [12]
 LaTeX Font Info:    Trying to load font information for TS1+txtt on input line 
 1.
@@ -898,56 +898,56 @@ LaTeX Font Info:    Trying to load font information for TS1+txtt on input line
 (/usr/share/texlive/texmf-dist/tex/latex/txfonts/ts1txtt.fd
 File: ts1txtt.fd 2000/12/15 v3.1
 ) [13] [14] [15]
-[16] [17] [18] [19] [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 1521--1524
+[16] [17] [18] [19] [20] [21] [22]
+Underfull \hbox (badness 10000) in paragraph at lines 1549--1552
 [][][][][]\T1/qtm/m/n/8 MySQL Documentation, \T1/qtm/m/it/8 Using the Performan
 ce Schema to Diagnose Problems\T1/qtm/m/n/8 , [][]$https : / / dev . mysql . co
 m / doc / refman / 8 . 2 / en /
  []
 
-[22] [23]
-Underfull \hbox (badness 10000) in paragraph at lines 1589--1592
+[23]
+Underfull \hbox (badness 10000) in paragraph at lines 1617--1620
 [][][][][]\T1/qtm/m/n/8 Grafana Documentation, \T1/qtm/m/it/8 Dashboards overvi
 ew \T1/qtm/m/n/8 oraz \T1/qtm/m/it/8 Grafana Alerting\T1/qtm/m/n/8 , [][]$https
  : / / grafana . com / docs / grafana / latest / fundamentals /
  []
 
-[24] [25] [26] [27] [28] [29]
-Underfull \hbox (badness 10000) in paragraph at lines 1935--1938
+[24] [25] [26] [27] [28] [29] [30]
+Underfull \hbox (badness 10000) in paragraph at lines 2001--2004
 []\T1/qtm/b/n/10 Mitygacja: \T1/qtm/m/n/10 Podstawow¡ i najskuteczniejsz¡ metod
 ¡ obrony przed SQLi jest korzystanie z \T1/qtm/b/n/10 zapyta«
  []
 
-[30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40]
+[31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42
+
+]
 Chapter 3.
 
-Underfull \hbox (badness 5652) in paragraph at lines 2461--2464
+Underfull \hbox (badness 5652) in paragraph at lines 2527--2530
 \T1/qtm/b/n/10 Wybrane zagadnienie: \T1/qtm/m/n/10 System zarz¡dzania sprzeda»¡
  w sklepie internetowym z elektronik¡. Projekt
  []
 
-[41
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 2516--2518
+[43]
+Underfull \hbox (badness 10000) in paragraph at lines 2582--2584
 \T1/qtm/m/n/10 Aby zweryfikowa¢ kompletno±¢ przetwarzanych informacji, przygoto
 wano ^^Rpªask¡^^Q (nieznormalizowan¡)
  []
 
-[42] [43]
-<schemat_chena.png, id=951, 1059.96pt x 773.89125pt>
+[44] [45]
+<schemat_chena.png, id=971, 1059.96pt x 773.89125pt>
 File: schemat_chena.png Graphic file (type png)
 <use schemat_chena.png>
-Package pdftex.def Info: schemat_chena.png  used on input line 2659.
+Package pdftex.def Info: schemat_chena.png  used on input line 2725.
 (pdftex.def)             Requested size: 469.74797pt x 342.96939pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2692--2694
+Underfull \hbox (badness 10000) in paragraph at lines 2758--2760
 []\T1/qtm/m/n/10 Zale»ne od caªego klucza: Ilo±¢, Cena_historyczna, Ocena, Kome
 ntarz -> Tabela
  []
 
-[44 <./schemat_chena.png>]
-Underfull \hbox (badness 6252) in paragraph at lines 2752--2754
+[46 <./schemat_chena.png>]
+Underfull \hbox (badness 6252) in paragraph at lines 2818--2820
 []\T1/qtm/b/n/10 Zamowienia\T1/qtm/m/n/10 : \T1/txtt/m/n/10 ID_Zamowienia \T1/q
 tm/m/n/10 (PK), \T1/txtt/m/n/10 ID_Klienta \T1/qtm/m/n/10 (FK), \T1/txtt/m/n/10
  Data_zamowienia\T1/qtm/m/n/10 , \T1/txtt/m/n/10 Status_zamowienia\T1/qtm/m/n/1
@@ -955,69 +955,69 @@ tm/m/n/10 (PK), \T1/txtt/m/n/10 ID_Klienta \T1/qtm/m/n/10 (FK), \T1/txtt/m/n/10
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2760--2762
+Underfull \hbox (badness 10000) in paragraph at lines 2826--2828
 []\T1/qtm/b/n/10 Pozycje_Zamowienia\T1/qtm/m/n/10 : \T1/txtt/m/n/10 ID_Pozycji 
 \T1/qtm/m/n/10 (PK), \T1/txtt/m/n/10 ID_Zamowienia \T1/qtm/m/n/10 (FK), \T1/txt
 t/m/n/10 ID_Produktu \T1/qtm/m/n/10 (FK), \T1/txtt/m/n/10 Ilosc\T1/qtm/m/n/10 ,
 
  []
 
-<schemat_erd.png, id=961, 779.16093pt x 496.10344pt>
+<schemat_erd.png, id=981, 779.16093pt x 496.10344pt>
 File: schemat_erd.png Graphic file (type png)
 <use schemat_erd.png>
-Package pdftex.def Info: schemat_erd.png  used on input line 2776.
+Package pdftex.def Info: schemat_erd.png  used on input line 2842.
 (pdftex.def)             Requested size: 469.7472pt x 299.10263pt.
-[45]
-<schemat_fizyczny_sqlite.png, id=973, 920.68968pt x 513.41812pt>
+[47]
+<schemat_fizyczny_sqlite.png, id=991, 920.68968pt x 513.41812pt>
 File: schemat_fizyczny_sqlite.png Graphic file (type png)
 <use schemat_fizyczny_sqlite.png>
-Package pdftex.def Info: schemat_fizyczny_sqlite.png  used on input line 2832.
+Package pdftex.def Info: schemat_fizyczny_sqlite.png  used on input line 2898.
 (pdftex.def)             Requested size: 469.77031pt x 261.95728pt.
- [46 <./schemat_erd.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 2873--2875
+ [48 <./schemat_erd.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 2939--2941
 []\T1/qtm/b/n/10 Opinie\T1/qtm/m/n/10 : \T1/txtt/m/n/10 ID_Opinii \T1/qtm/m/n/1
 0 : SERIAL PRIMARY KEY, \T1/txtt/m/n/10 ID_Pozycji \T1/qtm/m/n/10 : INTEGER REF
 ERENCES
  []
 
-[47 <./schemat_fizyczny_sqlite.png>]
-<schemat_fizyczny_postgres.png, id=984, 900.36375pt x 490.08093pt>
+[49 <./schemat_fizyczny_sqlite.png>]
+<schemat_fizyczny_postgres.png, id=1002, 900.36375pt x 490.08093pt>
 File: schemat_fizyczny_postgres.png Graphic file (type png)
 <use schemat_fizyczny_postgres.png>
-Package pdftex.def Info: schemat_fizyczny_postgres.png  used on input line 2882
+Package pdftex.def Info: schemat_fizyczny_postgres.png  used on input line 2948
 .
 (pdftex.def)             Requested size: 469.75803pt x 255.68857pt.
- [48 <./schemat_fizyczny_postgres.png>]
+ [50 <./schemat_fizyczny_postgres.png>]
 Chapter 4.
-[49
+[51
 
 ]
-Underfull \hbox (badness 6493) in paragraph at lines 2948--2951
+Underfull \hbox (badness 6493) in paragraph at lines 3014--3017
 []\T1/qtm/m/n/10 Kod ¹ródªowy skryptów wdro»eniowych oraz pliki konfiguracyjne 
 zostaªy umieszczone w dedykowanym
  []
 
 
-Underfull \hbox (badness 5008) in paragraph at lines 2948--2951
+Underfull \hbox (badness 5008) in paragraph at lines 3014--3017
 \T1/qtm/m/n/10 repozytorium podprojektu. Link do zasobów zamieszczono poni»ej: 
 * \T1/qtm/b/n/10 Link do repozytorium kodu:
  []
 
-[50] [51] [52] [53] [54]
+[52] [53] [54] [55] [56]
 Chapter 5.
-[55
+[57
 
-] [56] [57] [58
+] [58] [59] [60
 
 ]
 
 LaTeX Warning: Reference `rozdziaÅ‚_5/BD_Zapytania/index:module-db_queries' on 
-page 59 undefined on input line 3491.
+page 61 undefined on input line 3557.
 
-[59
+[61
 
 
-] (./sprawozdaniezlaboratorium.ind [60
+] (./sprawozdaniezlaboratorium.ind [62
 
 
 ]
@@ -1068,7 +1068,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--33
 t/10 w module
  []
 
-[61
+[63
 
 
 ]) (./sprawozdaniezlaboratorium.aux)
@@ -1085,13 +1085,13 @@ LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `sprawozdaniezlaboratorium.out' has not chang
 ed.
-(rerunfilecheck)             Checksum: 0410D1B38886EDF897941357C56566B4;36540.
+(rerunfilecheck)             Checksum: B48B3693F1AFE83850F12EE33D90D164;37089.
  ) 
 Here is how much of TeX's memory you used:
- 17043 strings out of 476182
- 290016 string characters out of 5795595
+ 17052 strings out of 476182
+ 290305 string characters out of 5795595
  2016975 words of memory out of 5000000
- 38317 multiletter control sequences out of 15000+600000
+ 38323 multiletter control sequences out of 15000+600000
  627110 words of font info for 95 fonts, out of 8000000 for 9000
  15 hyphenation exceptions out of 8191
  72i,12n,79p,1153b,712s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1104,10 +1104,10 @@ texmf/fonts/type1/public/tex-gyre/qhvb.pfb></usr/share/texmf/fonts/type1/public
 fonts/t1xbtt.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/t1xt
 t.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/txfonts/tcxtt.pfb>
-Output written on sprawozdaniezlaboratorium.pdf (65 pages, 671892 bytes).
+Output written on sprawozdaniezlaboratorium.pdf (67 pages, 676666 bytes).
 PDF statistics:
- 1220 PDF objects out of 1440 (max. 8388607)
- 1118 compressed objects within 12 object streams
- 329 named destinations out of 1000 (max. 500000)
- 1281 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1240 PDF objects out of 1440 (max. 8388607)
+ 1136 compressed objects within 12 object streams
+ 332 named destinations out of 1000 (max. 500000)
+ 1305 words of extra memory for PDF output out of 10000 (max. 10000000)
 
