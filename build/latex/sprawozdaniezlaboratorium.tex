@@ -2587,8 +2587,8 @@ W rozdziale warto wyraźnie rozróżnić kopie logiczne i fizyczne, bo odpowiada
 \sphinxstepscope
 
 
-\chapter{Sprawozdanie: Projektowanie bazy danych}
-\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:sprawozdanie-projektowanie-bazy-danych}}\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index::doc}}\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index::doc}}\begin{quote}\begin{description}
+\chapter{Projektowanie bazy danych}
+\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:projektowanie-bazy-danych}}\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index::doc}}\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index::doc}}\begin{quote}\begin{description}
 \sphinxlineitem{Autorzy}\begin{enumerate}
 \sphinxsetlistlabels{\arabic}{enumi}{enumii}{}{.}%
 \item {} 
@@ -2601,7 +2601,7 @@ Daniel Szokało
 
 \item {} 
 \sphinxAtStartPar
-Dawid Szkoało
+Dawid Szokało
 
 \end{enumerate}
 
@@ -2614,7 +2614,7 @@ Dawid Szkoało
 \end{itemize}
 
 
-\section{1. Wybór zagadnienia, opis procesów i danych}
+\section{Wybór zagadnienia, opis procesów i danych}
 \label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:wybor-zagadnienia-opis-procesow-i-danych}}
 \sphinxAtStartPar
 \sphinxstylestrong{Wybrane zagadnienie:} System zarządzania sprzedażą w sklepie internetowym z elektroniką.
@@ -2669,7 +2669,7 @@ Głównym procesem w systemie jest realizacja transakcji zakupu sprzętu elektro
 \end{itemize}
 
 
-\section{2. Prototyp CSV}
+\section{Prototyp CSV}
 \label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:prototyp-csv}}
 \sphinxAtStartPar
 Aby zweryfikować kompletność przetwarzanych informacji, przygotowano „płaską” (nieznormalizowaną) reprezentację danych dla transakcji zakupu.
@@ -2681,8 +2681,8 @@ Jan,Kowalski,250123@student.pwr.edu.pl,500600700,Wrocław,Wybrzeże Wyspiańskie
 \end{sphinxVerbatim}
 
 
-\section{3. Model Konceptualny (Pojęciowy)}
-\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:model-konceptualny-pojeciowy}}
+\section{Model Konceptualny}
+\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:model-konceptualny}}
 \sphinxAtStartPar
 Na podstawie analizy procesów i zebranych danych opracowano model pojęciowy, identyfikując obiekty, ich cechy oraz powiązania.
 
@@ -2818,10 +2818,10 @@ Z uwagi na relację wiele\sphinxhyphen{}do\sphinxhyphen{}wielu między \sphinxst
 \caption{Rysunek 1: Model konceptualny bazy danych sklepu z elektroniką.}\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:id1}}\end{figure}
 
 
-\section{4. Model logiczny i proces normalizacji}
+\section{Model logiczny i proces normalizacji}
 \label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:model-logiczny-i-proces-normalizacji}}
 
-\subsection{4.1. Przebieg procesu normalizacji}
+\subsection{Przebieg procesu normalizacji}
 \label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:przebieg-procesu-normalizacji}}
 \sphinxAtStartPar
 \sphinxstylestrong{Krok 1: Pierwsza Postać Normalna (1NF)}
@@ -2885,7 +2885,7 @@ Z tabeli \sphinxstyleemphasis{Pozycje\_Zamowienia} odłączamy atrybuty opcjonal
 \end{itemize}
 
 
-\subsection{4.2. Ostateczna struktura tabel (3NF)}
+\subsection{Ostateczna struktura tabel (3NF)}
 \label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:ostateczna-struktura-tabel-3nf}}
 \sphinxAtStartPar
 W wyniku normalizacji wyodrębniono 8 tabel.
@@ -2925,7 +2925,7 @@ W wyniku normalizacji wyodrębniono 8 tabel.
 \end{itemize}
 
 
-\subsection{4.3. Diagram ERD (Model Logiczny)}
+\subsection{Diagram ERD (Model Logiczny)}
 \label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:diagram-erd-model-logiczny}}
 \begin{figure}[htbp]
 \centering
@@ -2935,13 +2935,13 @@ W wyniku normalizacji wyodrębniono 8 tabel.
 \caption{Rysunek 2: Model logiczny (ERD) bazy danych sprzętu elektronicznego (3NF).}\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:id2}}\end{figure}
 
 
-\section{5. Model fizyczny bazy danych}
+\section{Model fizyczny bazy danych}
 \label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:model-fizyczny-bazy-danych}}
 \sphinxAtStartPar
 Różnice implementacyjne między modelami fizycznymi wynikają wprost z silników RDBMS \textendash{} ograniczeń typowania SQLite oraz bogatych możliwości deklaratywnych PostgreSQL.
 
 
-\subsection{5.1. Model fizyczny dla środowiska SQLite}
+\subsection{Model fizyczny dla środowiska SQLite}
 \label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:model-fizyczny-dla-srodowiska-sqlite}}
 \sphinxAtStartPar
 Z uwagi na bardzo okrojony zestaw typów (INTEGER, REAL, TEXT, BLOB, NULL), daty są mapowane jako TEXT, a wartości finansowe na REAL. Boolean (dla opcjonalnych flag) również interpretowany jest wewnętrznie jako INTEGER.
@@ -2991,7 +2991,7 @@ Z uwagi na bardzo okrojony zestaw typów (INTEGER, REAL, TEXT, BLOB, NULL), daty
 \caption{Rysunek 3: Fizyczny schemat bazy danych opracowany dla silnika SQLite.}\label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:id3}}\end{figure}
 
 
-\subsection{5.2. Model fizyczny dla środowiska PostgreSQL}
+\subsection{Model fizyczny dla środowiska PostgreSQL}
 \label{\detokenize{rozdzia_u0142_3/BD_PlanBazyDanych_zad1/index:model-fizyczny-dla-srodowiska-postgresql}}
 \sphinxAtStartPar
 PostgreSQL umożliwia zastosowanie precyzyjnych i natywnych typów ułatwiających późniejszą obsługę \textendash{} m.in. typów numerycznych dla cen (unikających błędu precyzji zmiennoprzecinkowej), typów czasowych z odpowiednią strefą oraz ścisłych ograniczeń długości łańcuchów znaków.

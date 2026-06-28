@@ -125,23 +125,23 @@
 \contentsline {subsubsection}{PITR i odzyskiwanie stanu sprzed błędu}{42}{subsubsection*.65}%
 \contentsline {subsection}{\numberline {2.8.5}Dedykowane oprogramowanie i skrypty zewnętrzne do automatyzacji}{42}{subsection.2.8.5}%
 \contentsline {subsection}{\numberline {2.8.6}Podsumowanie}{43}{subsection.2.8.6}%
-\contentsline {chapter}{\numberline {3}Sprawozdanie: Projektowanie bazy danych}{45}{chapter.3}%
-\contentsline {section}{\numberline {3.1}1. Wybór zagadnienia, opis procesów i danych}{45}{section.3.1}%
-\contentsline {section}{\numberline {3.2}2. Prototyp CSV}{46}{section.3.2}%
-\contentsline {section}{\numberline {3.3}3. Model Konceptualny (Pojęciowy)}{46}{section.3.3}%
+\contentsline {chapter}{\numberline {3}Projektowanie bazy danych}{45}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Wybór zagadnienia, opis procesów i danych}{45}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Prototyp CSV}{46}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Model Konceptualny}{46}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Zidentyfikowane encje}{46}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Zdefiniowane atrybuty/własności}{47}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}Opis związków}{47}{subsection.3.3.3}%
 \contentsline {subsection}{\numberline {3.3.4}Określenie związków niepoprawnych (pułapki połączeń)}{47}{subsection.3.3.4}%
 \contentsline {subsection}{\numberline {3.3.5}Identyfikacja encji słabych}{47}{subsection.3.3.5}%
 \contentsline {subsection}{\numberline {3.3.6}Schemat w notacji Chena}{48}{subsection.3.3.6}%
-\contentsline {section}{\numberline {3.4}4. Model logiczny i proces normalizacji}{48}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}4.1. Przebieg procesu normalizacji}{48}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}4.2. Ostateczna struktura tabel (3NF)}{49}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}4.3. Diagram ERD (Model Logiczny)}{49}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}5. Model fizyczny bazy danych}{49}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}5.1. Model fizyczny dla środowiska SQLite}{50}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}5.2. Model fizyczny dla środowiska PostgreSQL}{51}{subsection.3.5.2}%
+\contentsline {section}{\numberline {3.4}Model logiczny i proces normalizacji}{48}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Przebieg procesu normalizacji}{48}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Ostateczna struktura tabel (3NF)}{49}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Diagram ERD (Model Logiczny)}{49}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Model fizyczny bazy danych}{49}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Model fizyczny dla środowiska SQLite}{50}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Model fizyczny dla środowiska PostgreSQL}{51}{subsection.3.5.2}%
 \contentsline {chapter}{\numberline {4}Implementacja fizyczna i zasilanie bazy danych}{53}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Wprowadzenie}{53}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Definicja fizyczna bazy danych (Zadanie 1)}{53}{section.4.2}%

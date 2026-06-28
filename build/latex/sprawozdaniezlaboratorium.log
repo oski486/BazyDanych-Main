@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.6.24)  28 JUN 2026 22:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.6.24)  28 JUN 2026 23:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1085,11 +1085,11 @@ LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `sprawozdaniezlaboratorium.out' has not chang
 ed.
-(rerunfilecheck)             Checksum: 41454E171C6A88B211F1CC6B2044CD1A;37750.
+(rerunfilecheck)             Checksum: FFA503886AC6870044110D860017A0EF;37375.
  ) 
 Here is how much of TeX's memory you used:
  17065 strings out of 476182
- 290675 string characters out of 5795595
+ 290652 string characters out of 5795595
  2016975 words of memory out of 5000000
  38329 multiletter control sequences out of 15000+600000
  627110 words of font info for 95 fonts, out of 8000000 for 9000
@@ -1104,7 +1104,7 @@ texmf/fonts/type1/public/tex-gyre/qhvb.pfb></usr/share/texmf/fonts/type1/public
 fonts/t1xbtt.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/t1xt
 t.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/txfonts/tcxtt.pfb>
-Output written on sprawozdaniezlaboratorium.pdf (69 pages, 681727 bytes).
+Output written on sprawozdaniezlaboratorium.pdf (69 pages, 681500 bytes).
 PDF statistics:
  1263 PDF objects out of 1440 (max. 8388607)
  1157 compressed objects within 12 object streams
