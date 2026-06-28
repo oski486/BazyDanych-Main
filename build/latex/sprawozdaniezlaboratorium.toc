@@ -142,16 +142,16 @@
 \contentsline {section}{\numberline {3.5}5. Model fizyczny bazy danych}{49}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}5.1. Model fizyczny dla środowiska SQLite}{50}{subsection.3.5.1}%
 \contentsline {subsection}{\numberline {3.5.2}5.2. Model fizyczny dla środowiska PostgreSQL}{51}{subsection.3.5.2}%
-\contentsline {chapter}{\numberline {4}Rozdział 4: Implementacja fizyczna i zasilanie bazy danych}{53}{chapter.4}%
+\contentsline {chapter}{\numberline {4}Implementacja fizyczna i zasilanie bazy danych}{53}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Wprowadzenie}{53}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Definicja fizyczna bazy danych (Zadanie 1)}{54}{section.4.2}%
+\contentsline {section}{\numberline {4.2}Definicja fizyczna bazy danych (Zadanie 1)}{53}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Skrypt dla środowiska PostgreSQL}{54}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Skrypt dla środowiska SQLite}{55}{subsection.4.2.2}%
 \contentsline {section}{\numberline {4.3}Mechanizm zasilania bazy danych (Zadanie 2)}{56}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Formatowanie danych (Pliki CSV)}{56}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Implementacja mechanizmu importu}{56}{subsection.4.3.2}%
 \contentsline {section}{\numberline {4.4}Podsumowanie}{58}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Rozdział 5: Zapytania do bazy danych}{59}{chapter.5}%
+\contentsline {chapter}{\numberline {5}Zapytania do bazy danych}{59}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Wprowadzenie}{59}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Środowisko uruchomieniowe i architektura}{59}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Złożoność zapytań SQL}{60}{section.5.3}%
