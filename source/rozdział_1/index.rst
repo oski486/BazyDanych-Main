@@ -6,6 +6,12 @@ Rozdział 1: Wprowadzenie
 
 Niniejszy rozdział otwiera sprawozdanie końcowe z przedmiotu Bazy Danych, realizowanego w semestrze letnim roku akademickiego 2025/2026 w ramach studiów na kierunku informatyka techniczna.
 
+* **Link do repozytorium głównego:** `https://github.com/oski486/BazyDanych-Main`
+* **Link do repozytorium tematycznego:** `https://github.com/oski486/BazyDanych-Subject`
+* **Link do repozytorium rozdziału 3:** `https://github.com/oski486/BD_PlanBazyDanych_zad1`
+* **Link do repozytorium rozdziału 4:** `https://github.com/oski486/BD_WprowadzanieBD/tree/main`
+* **Link do repozytorium rozdziału 5:** `https://github.com/oski486/BD_Zapytania`
+
 Wprowadzenie tematyczne
 =======================
 
